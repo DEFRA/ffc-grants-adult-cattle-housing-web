@@ -1,0 +1,197 @@
+{  
+  "poultry-type": [
+    {
+      "key": "poultry-type",
+      "title": "What type of poultry will be housed in this building?",
+      "answers": {
+        "poultry-type-A1": "hen",
+        "poultry-type-A2": "pullet"
+      }
+    }
+  ],
+  "current-system": [
+    {
+      "key": "current-system",
+      "title": "What type of hen housing system do you currently use in the building?",
+      "answers": {
+        "current-system-A1": "Colony cage",
+        "current-system-A2": "Combi-cage",
+        "current-system-A3": "Barn",
+        "current-system-A4": "Free range",
+        "current-system-A5": "Organic",
+        "current-system-A6": "None of the above"
+      }
+    }
+  ],
+  "current-multi-tier-system": [
+    {
+      "key": "current-multi-tier-system",
+      "title": "Does your current building include a multi-tier aviary systems?",
+      "answers": {
+        "current-multi-tier-system-A1": "Yes",
+        "current-multi-tier-system-A2": "No"
+      }
+    }
+  ],
+  "ramp-connection": [
+    {
+      "key": "ramp-connection",
+      "title": "Will every level of the multi-tier system be connected to another level by a ramp?",
+      "answers": {
+        "ramp-connection-A1": "Yes",
+        "ramp-connection-A2": "No"
+      }
+    }
+  ],
+  "maximum-tier-height": [
+    {
+      "key": "maximum-tier-height",
+      "title": "Will the highest tier with direct access to the floor be 2 metres high or less?",
+      "answers": {
+        "maximum-tier-height-A1": "Yes",
+        "maximum-tier-height-A2": "No"
+      }
+    }
+  ],
+  "tier-number": [
+    {
+      "key": "tier-number",
+      "title": "How many tiers will be positioned directly above each other in the {{_poultryType_}} system?",
+      "answers": {
+        "tier-number-A1": "3 tiers or fewer",
+        "tier-number-A2": "4 tiers"
+      }
+    }
+  ],
+  "hen-multi-tier": [
+    {
+      "key": "hen-multi-tier",
+      "title": "Will the hens in your grant-funded building be reared in a multi-tier system as pullets?",
+      "answers": {
+        "hen-multi-tier-A1": "Yes",
+        "hen-multi-tier-A2": "No",
+        "hen-multi-tier-A3": "I don’t know"
+      }
+    }
+  ],
+  "pullet-multi-tier": [
+    {
+      "key": "pullet-multi-tier",
+      "title": "Will the pullets in your grant-funded building be reared in a multi-tier system as pullets?",
+      "answers": {
+        "pullet-multi-tier-A1": "Yes",
+        "pullet-multi-tier-A2": "No",
+        "pullet-multi-tier-A3": "I don’t know"
+      }
+    }
+  ],
+  "natural-light": [
+    {
+      "key": "natural-light",
+      "title": "Will the building have windows that provide natural light to the indoor housing?",
+      "answers": {
+        "natural-light-A1": "Yes",
+        "natural-light-A2": "No"
+      }
+    }
+  ],
+  "dark-brooders": [
+    {
+      "key": "dark-brooders",
+      "title": "Will the housing include dark brooders?",
+      "answers": {
+        "dark-brooders-A1": "Yes",
+        "dark-brooders-A2": "No"
+      }
+    }
+  ],
+  "easy-grip-perches": [
+    {
+      "key": "easy-grip-perches",
+      "title": "Will the perches have a design feature that help the hens grip the perches?",
+      "answers": {
+        "easy-grip-perches-A1": "Yes",
+        "easy-grip-perches-A2": "No"
+      }
+    }
+  ],
+  "building-biosecurity": [
+    {
+      "key": "building-biosecurity",
+      "title": "Will the building structure include the following?",
+      "answers": {
+        "building-biosecurity-A1": "Shower facilities in the biosecurity changing area",
+        "building-biosecurity-A2": "An integrated externally accessible storage room with a separate air space",
+        "building-biosecurity-A3": "None of the above"
+      }
+    }
+  ],
+  "pollution-mitigation": [
+    {
+      "key": "pollution-mitigation",
+      "title": "Will the building have any of the following?",
+      "answers": {
+        "pollution-mitigation-A1": "Manure drying",
+        "pollution-mitigation-A2": "Air filtration at inlets",
+        "pollution-mitigation-A3": "Air filtration at outlets, for example using wet or dry scrubbers",
+        "pollution-mitigation-A4": "A tree shelter belt near air outlets",
+        "pollution-mitigation-A5": "None of the above"
+      }
+    }
+  ],
+  "pullet-veranda-features": [
+    {
+      "key": "pullet-veranda-features",
+      "title": "Will the pullet housing have a veranda with these features?",
+      "answers": {
+        "pullet-veranda-features-A1": "Yes",
+        "pullet-veranda-features-A2": "No"
+      }
+    }
+  ],
+  "renewable-energy": [
+    {
+      "key": "renewable-energy",
+      "title": "Will the hen housing use renewable energy sources?",
+      "answers": {
+        "renewable-energy-A1": "Solar PV system",
+        "renewable-energy-A2": "A heat exchanger (heating only)",
+        "renewable-energy-A3": "A heat exchanger (heating and cooling)",
+        "renewable-energy-A4": "Biomass boiler",
+        "renewable-energy-A5": "None of the above"
+      }
+    }
+  ],
+  "bird-data-type": [
+    {
+      "key": "bird-data-type",
+      "title": "What poultry management data will you automatically collect and store?",
+      "answers": {
+        "bird-data-type-A1": "Bird location",
+        "bird-data-type-A2": "Egg production parameters",
+        "bird-data-type-A3": "Body weight",
+        "bird-data-type-A4": "Disease detection",
+        "bird-data-type-A5": "Feed data or conversion ratios",
+        "bird-data-type-A6": "Locomotion or movement",
+        "bird-data-type-A7": "Nest use",
+        "bird-data-type-A8": "Sound analysis",
+        "bird-data-type-A9": "Other",
+        "bird-data-type-A10": "None of the above"
+
+      }
+    }
+  ],
+  "environmental-data-type": [
+    {
+      "key": "environmental-data-type",
+      "title": "What additional environmental data will you automatically collect and store?",
+      "answers": {
+        "environmental-data-type-A1": "Ammonia",
+        "environmental-data-type-A2": "Carbon monoxide",
+        "environmental-data-type-A3": "Inhalable dust",
+        "environmental-data-type-A4": "Other",
+        "environmental-data-type-A5": "None of the above"
+      }
+    }
+  ]
+}
