@@ -56,7 +56,7 @@ APPINSIGHT_INSTRUMENTATION_KEY | The key needed to connect to App Insights | N/A
 REDIS_HOSTNAME | The hostname needed for connecting to Azure Redis | N/A
 REDIS_PORT | The port needed for connecting to Azure Redis | N/A
 REDIS_PASSWORD | The password needed for connecting to Azure Redis | N/A
-REDIS_PARTITION | The name of the application, needed for Azure Redis | ffc-grants-laying-hens-web
+REDIS_PARTITION | The name of the application, needed for Azure Redis | ffc-grants-adult-cattle-housing-web
 SERVER_TIMEOUT | How long the server timeout should be when running loclaly | 5
 --- | ---  | ---
 SCORE_REQUEST_QUEUE_ADDRESS | The name of the Azure Service Bus Queue used for sending the score request (without the users initials) | ffc-grants-queue-req
@@ -92,9 +92,9 @@ Before starting the application, make sure to run 'npm install' from the root of
 
 Once all the dependencies have been installed, start up Docker and then run the command 'docker-compose up --build'. This will build the application using the .env variables specified, and then will run and host the application on the localhost port specified in the .env file.
 
-Once the Docker application is running, the frontend application can be accessed by entering the localhost port in any web browser, followed by **/laying-hens/start**
+Once the Docker application is running, the frontend application can be accessed by entering the localhost port in any web browser, followed by **/adult-cattle-housing/start**
 
-e.g localhost:3600/laying-hens/start
+e.g localhost:3600/adult-cattle-housing/start
 
 In order to access the _/score_ page, the **ffc-grants-desirability-scoring** service must be running locally, and the DEFRA VPN connection must be active (this is required to send and receive requests via Azure Service Buses)
 

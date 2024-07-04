@@ -4,10 +4,10 @@ version: '3.8'
 # that test output is saved to the host
 
 services:
-  ffc-grants-laying-hens-web:
+  ffc-grants-adult-cattle-housing-web:
     build:
       target: development
-    image: ffc-grants-laying-hens-web-development
+    image: ffc-grants-adult-cattle-housing-web-development
     environment:
       NODE_ENV: test
       GOOGLE_TAG_MANAGER_KEY: 'GTM-WJ5C78H'

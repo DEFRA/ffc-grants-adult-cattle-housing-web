@@ -667,11 +667,11 @@ const handleNextUrlSolarPowerCapacity = (request, baseUrl, currentQuestion) => {
 const handleRedirects = (baseUrl, request, payload) => {
   if (baseUrl === 'project-cost' && getYarValue(request, 'solarPVSystem') === 'Yes' && Number(payload[Object.keys(payload)[0]].toString().replace(/,/g, '')) >= 1250000) {
     setYarValue(request, 'totalRemainingCost', Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) - 500000)
-    return '/laying-hens/potential-amount'
+    return '/adult-cattle-housing/potential-amount'
   } else if (baseUrl === 'project-type' && VERANDA_FUNDING_CAP_REACHED && getYarValue(request, 'projectType') === getQuestionAnswer('project-type', 'project-type-A1', ALL_QUESTIONS)){
-    return '/laying-hens/veranda-funding-cap'
+    return '/adult-cattle-housing/veranda-funding-cap'
   } else if (baseUrl === 'veranda-confirm' && VERANDA_FUNDING_CAP_REACHED){
-    return '/laying-hens/veranda-waitlist-confirmation'
+    return '/adult-cattle-housing/veranda-waitlist-confirmation'
   }
   return null
 }

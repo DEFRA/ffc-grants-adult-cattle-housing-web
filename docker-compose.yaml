@@ -1,11 +1,11 @@
 version: '3.8'
 
 services:
-  ffc-grants-laying-hens-web:
+  ffc-grants-adult-cattle-housing-web:
     build:
       context: .
       target: production
-    image: ffc-grants-laying-hens-web    
+    image: ffc-grants-adult-cattle-housing-web    
     environment:     
       NODE_ENV: production
       PORT: ${PORT:-3000}
@@ -22,14 +22,14 @@ services:
       BACKEND_POLLING_HOST: http://host.docker.internal:3021
       POLLING_INTERVAL: 200
       POLLING_RETRIES: 20
-      APPINSIGHTS_CLOUDROLE: ffc-grants-laying-hens
+      APPINSIGHTS_CLOUDROLE: ffc-grants-adult-cattle-housing
       APPINSIGHTS_INSTRUMENTATIONKEY: ${APPINSIGHTS_INSTRUMENTATIONKEY:-notset}
       REDIS_HOSTNAME: redis
       REDIS_PORT: 6379
       GRANT_PERCENTAGE: 40
       GRANT_PERCENTAGE_SOLAR: 25
       VERANDA_FUNDING_CAP_REACHED:  ${VERANDA_FUNDING_CAP_REACHED:-false}
-      REDIS_PARTITION: ffc-grants-laying-hens-web
+      REDIS_PARTITION: ffc-grants-adult-cattle-housing-web
       REDIS_PASSWORD: ""
       SESSION_CACHE_TTL: 1200000
       SURVEY_LINK: https://defragroup.eu.qualtrics.com/jfe/preview/SV_8elUWS7UgbUh3iC?Q_CHL=preview&Q_SurveyVersionID=current

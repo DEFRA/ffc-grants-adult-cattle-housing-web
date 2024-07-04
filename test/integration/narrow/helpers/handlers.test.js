@@ -104,7 +104,7 @@ describe('Get & Post Handlers', () => {
     mockH = { redirect: jest.fn() }
 
     await getHandler(question)({}, mockH)
-    expect(mockH.redirect).toHaveBeenCalledWith('/laying-hens/start')
+    expect(mockH.redirect).toHaveBeenCalledWith('/adult-cattle-housing/start')
   })
 
   xtest('is eligible if calculated grant = min grant - whether grant is capped or not', async () => { // TODO: I don't understand this test is trying to check for
@@ -117,7 +117,7 @@ describe('Get & Post Handlers', () => {
     mockH = { redirect: jest.fn() }
 
     await getHandler(question)({}, mockH)
-    expect(mockH.redirect).toHaveBeenCalledWith('/laying-hens/start')
+    expect(mockH.redirect).toHaveBeenCalledWith('/adult-cattle-housing/start')
   })
 
   // mock userScore function in handler.js
