@@ -106,7 +106,7 @@ it('user selects ineligible option: \'None of the above\' -> display ineligible 
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('/laying-hens/veranda-funding-cap')
+    expect(postResponse.headers.location).toBe('/adult-cattle-housing/veranda-funding-cap')
   })
 
   it('page loads with correct back link ', async () => {

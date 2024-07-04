@@ -1,10 +1,10 @@
 {
   "author": "Kaz Iyiola <kaz.iyiola@defra.gov.uk>",
   "license": "OGL-UK-3.0",
-  "name": "ffc-grants-laying-hens-web",
+  "name": "ffc-grants-adult-cattle-housing-web",
   "version": "1.1.1",
   "description": "FFC apply for FFC grant front end",
-  "homepage": "https://github.com/DEFRA/ffc-grants-laying-hens-web",
+  "homepage": "https://github.com/DEFRA/ffc-grants-adult-cattle-housing-web",
   "contributors": [],
   "keywords": [
     "wdio",

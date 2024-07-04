@@ -71,7 +71,7 @@ const config = {
   fetchScoreRequestMsgType: `${msgTypePrefix}.fetch.layingHens.score.request`,
   eligibilityAnswersMsgType: `${msgTypePrefix}.layingHens.eligibility.details`,
   contactDetailsMsgType: `${msgTypePrefix}.layingHens.contact.details`,
-  msgSrc: 'ffc-grants-laying-hens-web'
+  msgSrc: 'ffc-grants-adult-cattle-housing-web'
 }
 
 // Validate config

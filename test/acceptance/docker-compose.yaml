@@ -2,7 +2,7 @@ version: "3.7"
 services:
   wdio-cucumber:
     build: .
-    image: ffc-grants-laying-hens-acceptance
+    image: ffc-grants-adult-cattle-housing-acceptance
     container_name: webdriver-cuke
     depends_on:
       - selenium

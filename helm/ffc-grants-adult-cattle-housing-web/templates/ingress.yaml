@@ -1,5 +1,5 @@
-{{- include "ffc-helm-library.azure-ingress" (list . "ffc-grants-laying-hens-web.ingress") -}}
-{{- define "ffc-grants-laying-hens-web.ingress" -}}
+{{- include "ffc-helm-library.azure-ingress" (list . "ffc-grants-adult-cattle-housing-web.ingress") -}}
+{{- define "ffc-grants-adult-cattle-housing-web.ingress" -}}
 {{- if not .Values.pr -}}
 metadata:
   annotations:

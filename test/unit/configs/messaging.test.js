@@ -61,7 +61,7 @@ describe('messaging.js', () => {
       fetchScoreRequestMsgType: `${msgTypePrefix}.fetch.layingHens.score.request`,
       eligibilityAnswersMsgType: `${msgTypePrefix}.slurry.eligibility.details`,
       contactDetailsMsgType: `${msgTypePrefix}.slurry.contact.details`,
-      msgSrc: 'ffc-grants-laying-hens-web'
+      msgSrc: 'ffc-grants-adult-cattle-housing-web'
     })
   })
 
@@ -113,7 +113,7 @@ describe('messaging.js', () => {
       fetchScoreRequestMsgType: `${msgTypePrefix}.fetch.layingHens.score.request`,
       eligibilityAnswersMsgType: `${msgTypePrefix}.slurry.eligibility.details`,
       contactDetailsMsgType: `${msgTypePrefix}.slurry.contact.details`,
-      msgSrc: 'ffc-grants-laying-hens-web'
+      msgSrc: 'ffc-grants-adult-cattle-housing-web'
     })
   })
 

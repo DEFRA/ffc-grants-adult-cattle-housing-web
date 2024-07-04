@@ -25,7 +25,7 @@ exports.plugin = {
               params:
                 {
                   page_path: request.route.path,
-                  scoreReached: getYarValue(request, 'onScorePage') ? '/laying-hens/score' : '0'
+                  scoreReached: getYarValue(request, 'onScorePage') ? '/adult-cattle-housing/score' : '0'
                 }
             })
         }
