@@ -25,7 +25,7 @@ const {
 } = require('./pageHelpers')
 
 const { getUserScore } = require('../messaging/application')
-const { tableOrderHen, tableOrderPullet } = require('./score-table-helper')
+const { tableOrder } = require('./score-table-helper')
 const createMsg = require('../messaging/create-msg')
 const { desirability } = require('./../messaging/scoring/create-desirability-msg')
 const { ALL_QUESTIONS } = require('../config/question-bank')
@@ -245,8 +245,6 @@ const scorePageData = async (request, backUrl, url, h) => {
 
     setYarValue(request, 'overAllScore', msgData)
 
-    let tableOrder = getYarValue(request, 'poultryType') === getQuestionAnswer('poultry-type', 'poultry-type-A1', ALL_QUESTIONS) ? tableOrderHen : tableOrderPullet
-
     if (getYarValue(request, 'currentMultiTierSystem')) {
       let titleName = getYarValue(request, 'poultryType') === getQuestionAnswer('poultry-type', 'poultry-type-A1', ALL_QUESTIONS) ? 'Does your current building include an aviary system?' : 'Does your current building include a multi-tier system?'
       let currentMultiTierSystemValue = {
@@ -362,7 +360,7 @@ const handleConfirmation = async (url, request, confirmationId, maybeEligibleCon
       return h.redirect(startPageUrl)
     }
 
-    if ((url === 'confirmation' || url === 'veranda-confirmation' || url === 'veranda-waitlist-confirmation') && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('project-responsibility','project-responsibility-A2', ALL_QUESTIONS)){
+    if ((url === 'confirmation' || url === 'veranda-confirmation' || url === 'veranda-waitlist-confirmation') && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('current-system','current-system-A3', ALL_QUESTIONS)){
       maybeEligibleContent = {
         ...maybeEligibleContent,
         addText: true

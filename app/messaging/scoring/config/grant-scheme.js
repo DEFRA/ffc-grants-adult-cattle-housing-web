@@ -1,7 +1,4 @@
-module.exports = [{
-  key: 'LAYINGHENS01',
-  name: 'Laying Hens Grant'
-}, {
-  key: 'LAYINGHENS02',
-  name: 'Pullet Grant'
-}]
+module.exports = {
+  key: 'ADULTCATTLEHOUSING01',
+  name: 'Adult Cattle Housing'
+}

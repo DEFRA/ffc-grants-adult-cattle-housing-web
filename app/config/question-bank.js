@@ -187,7 +187,7 @@ const questionBank = {
           baseUrl: 'veranda-confirm',
           backUrl: 'check-details',
           nextUrl: 'veranda-confirmation',
-          // preValidationKeys: ['checkDetails'],
+          // preValidationKeys: ['projectType'],
           maybeEligible: true,
           maybeEligibleContent: {
             messageHeader: 'Confirm and send',
@@ -266,7 +266,7 @@ const questionBank = {
           title: 'What type of {{_poultryType_}} housing system do you currently use in the building?',
           pageTitle: '',
           backUrl: 'interruption-scoring',
-          nextUrl: 'check-details',
+          nextUrl: 'score',
           url: 'current-system',
           baseUrl: 'current-system',
           // preValidationObject: {
@@ -334,6 +334,37 @@ const questionBank = {
             }
           ],
           yarKey: 'currentSystem'
+        },
+        {
+          key: 'score',
+          order: 185,
+          title: 'Score results',
+          url: 'score',
+          baseUrl: 'score',
+          backUrl: 'environmental-data-type',
+          nextUrl: 'check-details',
+          // preValidationKeys: ['environmentalDataType'],
+          maybeEligible: true,
+          maybeEligibleContent: {
+            messageHeader: 'Your results',
+            messageContent: `Based on your answers, your project is:
+            <div class="govuk-inset-text">
+              <span class="govuk-heading-m">Eligible to apply</span>
+              </div>
+              <p class='govuk-body'>
+              The RPA wants to fund projects that have a higher environmental benefit. <br/><br/>
+              We will do this by prioritising projects in areas that need urgent action 
+              to reduce nutrient pollution from agriculture and restore natural habitats.<br/><br/>
+              Depending on the number of applications received, we may invite projects 
+              outside these areas to submit a full application.</p>`,
+            extraMessageContent: `
+            <h2 class="govuk-heading-m">Next steps</h2>
+            <p class="govuk-body">Next, add your business and contact details and submit them to the RPA (you should only do this once).
+            <br/><br/>
+            You’ll get an email with your answers and a reference number.</p>`,
+            insertText: { text: '' }
+          },
+          answers: []
         },
      ]
     }

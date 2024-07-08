@@ -1,6 +1,6 @@
 const grantSchemeConfig = require('./config/grant-scheme')
 const { desirabilityInputQuestionMapping, desirabilityQuestions: questionContent } = require('./content-mapping')
-const desirabilityQuestions = []
+const desirabilityQuestions = ['current-system']
 
 function getUserAnswer (answers, userInput) {
   if (answers) {
@@ -29,12 +29,10 @@ function getDesirabilityDetails(questionKey, userInput) {
 }
 
 function desirability (userInput) {
-  const grantScheme = grantSchemeConfig.filter(grant => grant.key === key)[0]
-
   return {
     grantScheme: {
-      key: grantScheme.key,
-      name: grantScheme.name
+      key: grantSchemeConfig.key,
+      name: grantSchemeConfig.name
     },
     desirability: {
       questions: desirabilityQuestions.map(questionKey => getDesirabilityDetails(questionKey, userInput)),
