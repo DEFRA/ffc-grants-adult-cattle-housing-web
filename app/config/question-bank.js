@@ -385,12 +385,12 @@ const questionBank = {
             }
           },
           nextUrl: 'applying',
-          preValidationObject: {
-            preValidationKeys: ['environmentalDataType', 'remainingCosts'],
-            preValidationAnswer: ['environmental-data-type-A1', 'environmental-data-type-A2', 'environmental-data-type-A3', 'environmental-data-type-A4', 'environmental-data-type-A5', 'veranda-remaining-costs-A1'],
-            preValidationRule: 'OR',
-            preValidationUrls: ['environmental-data-type', 'veranda-remaining-costs']
-          },
+          // preValidationObject: {
+          //   preValidationKeys: ['environmentalDataType', 'remainingCosts'],
+          //   preValidationAnswer: ['environmental-data-type-A1', 'environmental-data-type-A2', 'environmental-data-type-A3', 'environmental-data-type-A4', 'environmental-data-type-A5', 'veranda-remaining-costs-A1'],
+          //   preValidationRule: 'OR',
+          //   preValidationUrls: ['environmental-data-type', 'veranda-remaining-costs']
+          // },
           fundingPriorities: '',
           type: 'multi-input',
           minAnswerCount: '',
