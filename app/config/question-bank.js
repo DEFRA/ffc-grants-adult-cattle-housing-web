@@ -265,7 +265,7 @@ const questionBank = {
           order: 180,
           title: 'What type of {{_poultryType_}} housing system do you currently use in the building?',
           pageTitle: '',
-          backUrl: 'interruption-scoring',
+          backUrl: 'project-type',
           nextUrl: 'score',
           url: 'current-system',
           baseUrl: 'current-system',
@@ -304,14 +304,10 @@ const questionBank = {
             {
               key: 'current-system-A1',
               value: 'Colony cage',
-              redirectUrl: 'ramp-connection',
-              yarKeysReset: ['currentMultiTierSystem']
             },
             {
               key: 'current-system-A2',
               value: 'Combi-cage',
-              redirectUrl: 'ramp-connection',
-              yarKeysReset: ['currentMultiTierSystem']
             },
             {
               key: 'current-system-A3',

@@ -1,5 +1,5 @@
 const { ALL_QUESTIONS } = require('../../../../app/config/question-bank')
-const scoreData = require('../../../data/score-data-hen')
+const scoreData = require('../../../data/score-data')
 const { commonFunctionsMock } = require('../../../session-mock')
 
 let varList
