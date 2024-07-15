@@ -447,7 +447,7 @@ const multiInputForLoop = (payload, answers, type, yarKey, request) => {
 }
 
 // formatting variables block - needed for error validations
-const formatVariablesBlock = (currentQuestion, title, baseUrl, request, validate, ineligibleContent, hint) => {
+const formatVariablesBlock = (currentQuestion, title, request, validate, ineligibleContent, hint) => {
   currentQuestion = titleCheck(currentQuestion, title, request)
   currentQuestion = validateErrorCheck(currentQuestion, validate, request)
   currentQuestion = sidebarCheck(currentQuestion, request)
@@ -475,7 +475,7 @@ const showPostPage = (currentQuestion, request, h) => {
     setYarValue(request, 'onScorePage', false)
   }
 
-  currentQuestion = formatVariablesBlock(currentQuestion, title, baseUrl, request, validate, ineligibleContent, hint)
+  currentQuestion = formatVariablesBlock(currentQuestion, title, request, validate, ineligibleContent, hint)
 
   const thisAnswer = multiInputForLoop(payload, answers, type, yarKey, request)
   let NOT_ELIGIBLE = { ...currentQuestion?.ineligibleContent, backUrl: baseUrl }
