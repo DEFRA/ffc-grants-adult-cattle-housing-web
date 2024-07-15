@@ -136,7 +136,7 @@ const sidebarCheck = (question, request ) => {
   return question
 }
 
-const validateErrorCheck = (question, validate, url, request) => {
+const validateErrorCheck = (question, validate, request) => {
 
   // this sonar issue fix actually breaks all tests
   if (question?.validate && question.validate[0].error.includes('{{_')) {
@@ -155,7 +155,7 @@ const validateErrorCheck = (question, validate, url, request) => {
   return question
 }
 
-const ineligibleContentCheck = (question, ineligibleContent, url,  request) => {
+const ineligibleContentCheck = (question, ineligibleContent,  request) => {
   if (question?.ineligibleContent?.messageContent.includes('{{_')) {
     question = {
       ...question,
@@ -373,7 +373,7 @@ const getPage = async (question, request, h) => {
   // formatting variables block
   question = titleCheck(question, title, request)
   question = sidebarCheck(question, request)
-  question = ineligibleContentCheck(question, ineligibleContent, url, request)
+  question = ineligibleContentCheck(question, ineligibleContent, request)
   question = hintTextCheck(question, hint, request)
   question = labelTextCheck(question, label, request)
   question =  showHideAnswer(question, request)
@@ -449,9 +449,9 @@ const multiInputForLoop = (payload, answers, type, yarKey, request) => {
 // formatting variables block - needed for error validations
 const formatVariablesBlock = (currentQuestion, title, baseUrl, request, validate, ineligibleContent, hint) => {
   currentQuestion = titleCheck(currentQuestion, title, request)
-  currentQuestion = validateErrorCheck(currentQuestion, validate, baseUrl, request)
+  currentQuestion = validateErrorCheck(currentQuestion, validate, request)
   currentQuestion = sidebarCheck(currentQuestion, request)
-  currentQuestion = ineligibleContentCheck(currentQuestion, ineligibleContent, baseUrl, request)
+  currentQuestion = ineligibleContentCheck(currentQuestion, ineligibleContent, request)
   currentQuestion = hintTextCheck(currentQuestion, hint, request)
   currentQuestion = labelTextCheck(currentQuestion, currentQuestion.label, request)
   currentQuestion = showHideAnswer(currentQuestion, request)
