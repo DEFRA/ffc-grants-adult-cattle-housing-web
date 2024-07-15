@@ -1,6 +1,5 @@
 const { getModel } = require('../helpers/models')
 const { checkErrors } = require('../helpers/errorSummaryHandlers')
-const { getGrantValues } = require('../helpers/grants-info')
 const { formatUKCurrency } = require('../helpers/data-formats')
 const { SELECT_VARIABLE_TO_REPLACE, DELETE_POSTCODE_CHARS_REGEX } = require('ffc-grants-common-functionality').regex
 const { getYarValue, setYarValue } = require('ffc-grants-common-functionality').session
@@ -19,7 +18,6 @@ const {
   getConfirmationId,
   handleConditinalHtmlData,
   getCheckDetailsModel,
-  getEvidenceSummaryModel,
   getDataFromYarValue,
   getConsentOptionalData
 } = require('./pageHelpers')
@@ -29,7 +27,7 @@ const { tableOrder } = require('./score-table-helper')
 const createMsg = require('../messaging/create-msg')
 const { desirability } = require('./../messaging/scoring/create-desirability-msg')
 const { ALL_QUESTIONS } = require('../config/question-bank')
-const { PROJECT_TYPE_KEY } = require('./contants')
+const { PROJECT_TYPE_KEY } = require('./constants')
 
 const createModel = (data, backUrl, url) => {
   return {
