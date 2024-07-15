@@ -387,7 +387,7 @@ const getPage = async (question, request, h) => {
   await processGA(question, request)
 
   if (question.maybeEligible) {
-    return maybeEligibleGet(request, confirmationId, question, url, nextUrl, backUrl, h)
+    return maybeEligibleGet(request, confirmationId, question, url, nextUrl, question.backUrl, h)
   }
 
   const data = getDataFromYarValue(request, yarKey, type)
@@ -402,7 +402,7 @@ const getPage = async (question, request, h) => {
       request
     )
   }
-  return (getUrlSwitchFunction(data, question, request, conditionalHtml, backUrl, nextUrl, h))
+  return (getUrlSwitchFunction(data, question, request, conditionalHtml, question.backUrl, nextUrl, h))
 }
 
 const multiInputPostHandler = (currentQuestion, request, dataObject, payload, yarKey) => {

@@ -372,14 +372,7 @@ const questionBank = {
           url: 'business-details',
           baseUrl: 'business-details',
           //refactoring needed here
-          backUrlObject: {
-            dependentQuestionYarKey: 'projectType',
-            dependentAnswerKeysArray: ['project-type-A1'],
-            urlOptions: {
-              thenUrl: 'veranda-remaining-costs',
-              elseUrl: 'score'
-            }
-          },
+          backUrl: 'score',
           nextUrl: 'applying',
           // preValidationObject: {
           //   preValidationKeys: ['environmentalDataType', 'remainingCosts'],
