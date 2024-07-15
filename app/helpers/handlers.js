@@ -50,14 +50,7 @@ const getReplacementText = (request, key, questionType, questionKey, trueReturn,
 }
 
 const insertYarValue = (field, url, request) => {
-  field = field.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => field.includes('£') ? formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0) : getYarValue(request, additionalYarKeyName))
-
-  if (url === 'bird-number') {
-    const replacement =  getYarValue(request, 'projectType') === getQuestionAnswer(PROJECT_TYPE_KEY, 'project-type-A3', ALL_QUESTIONS) ? ' when it is complete' : ''
-    field = field.replace('[[_extraClause_]]', replacement)
-  }
-
-  return field
+  return field.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => field.includes('£') ? formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0) : getYarValue(request, additionalYarKeyName))
 }
 
 const titleCheck = (question, title, url, request) => {
@@ -359,14 +352,6 @@ const getUrlSwitchFunction = async (data, question, request, conditionalHtml, ba
     case 'check-details': {
       return h.view('check-details', getCheckDetailsModel(request, question, backUrl, nextUrl))
     }
-
-    case 'project': {
-      if (getYarValue(request, 'tenancy') === 'Yes') {
-        setYarValue(request, 'tenancyLength', null)
-      }
-      return h.view('page', getModel(data, question, request, conditionalHtml))
-    }
-
     case 'business-details':
     case 'agent-details':
     case 'applicant-details':
@@ -395,7 +380,7 @@ const getPage = async (question, request, h) => {
 
   // score contains maybe eligible, so can't be included in getUrlSwitchFunction
   if (url === 'score') {
-    return scorePageData(request, backUrl, url, h)
+    return scorePageData(request, question.backUrl, url, h)
   }
 
   const confirmationId = ''
@@ -460,31 +445,6 @@ const multiInputForLoop = (payload, answers, type, yarKey, request) => {
 
   return thisAnswer
 }
-const handleYarKey = (yarKey, request, payload, currentQuestion) => {
-  let calculatedGrant, remainingCost, projectCost
-
-  if (yarKey === 'solarPVCost' || yarKey === 'projectCost') {
-    ({ calculatedGrant, remainingCost, projectCost } = getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo))
-  }
-
-  switch (yarKey) {
-    case 'projectCost':
-      setYarValue(request, 'calculatedGrant', calculatedGrant)
-      setYarValue(request, 'remainingCost', remainingCost)
-      setYarValue(request, 'projectCost', projectCost)
-      if (getYarValue(request, 'solarPVSystem') === 'No'){
-        setYarValue(request, 'totalRemainingCost', getYarValue(request, 'remainingCost'))
-      }
-      break
-    case 'solarPVCost':
-      setYarValue(request, 'solarCalculatedGrant', calculatedGrant)
-      setYarValue(request, 'solarRemainingCost', remainingCost)
-      setYarValue(request, 'solarProjectCost', projectCost)
-      break
-    default:
-      break
-  }
-}
 
 // formatting variables block - needed for error validations
 const formatVariablesBlock = (currentQuestion, title, baseUrl, request, validate, ineligibleContent, hint) => {
@@ -498,29 +458,8 @@ const formatVariablesBlock = (currentQuestion, title, baseUrl, request, validate
   return currentQuestion
 }
 
-const handleNextUrlSolarPowerCapacity = (request, baseUrl, currentQuestion) => {
-  if (baseUrl === 'solar-power-capacity') {
-    if (Number(getYarValue(request, 'calculatedGrant')) + Number(getYarValue(request, 'solarCalculatedGrant')) > 500000) {
-      setYarValue(request, 'totalRemainingCost', Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) + Number(getYarValue(request, 'solarProjectCost')) - 500000)
-      return 'potential-amount-solar-capped'
-    } else if (Number(getYarValue(request, 'calculatedGrant')) + Number(getYarValue(request, 'solarCalculatedGrant')) <= 500000) {
-      if (0.005  >= Number(getYarValue(request, 'solarPowerCapacity')) / Number(getYarValue(request, 'solarBirdNumber').toString().replace(/,/g, ''))) {
-        setYarValue(request, 'totalRemainingCost', Number(getYarValue(request, 'remainingCost')) + Number(getYarValue(request, 'solarRemainingCost')))
-        return 'potential-amount-solar'
-      } else {
-        return 'potential-amount-solar-calculation'
-      }
-    }
-  } else {
-    return currentQuestion.nextUrl
-  }
-}
-
 const handleRedirects = (baseUrl, request, payload) => {
-  if (baseUrl === 'project-cost' && getYarValue(request, 'solarPVSystem') === 'Yes' && Number(payload[Object.keys(payload)[0]].toString().replace(/,/g, '')) >= 1250000) {
-    setYarValue(request, 'totalRemainingCost', Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) - 500000)
-    return '/adult-cattle-housing/potential-amount'
-  } else if (baseUrl === PROJECT_TYPE_KEY && VERANDA_FUNDING_CAP_REACHED && getYarValue(request, 'projectType') === getQuestionAnswer(PROJECT_TYPE_KEY, 'project-type-A1', ALL_QUESTIONS)){
+  if (baseUrl === PROJECT_TYPE_KEY && VERANDA_FUNDING_CAP_REACHED && getYarValue(request, 'projectType') === getQuestionAnswer(PROJECT_TYPE_KEY, 'project-type-A1', ALL_QUESTIONS)){
     return '/adult-cattle-housing/veranda-funding-cap'
   } else if (baseUrl === 'veranda-confirm' && VERANDA_FUNDING_CAP_REACHED){
     return '/adult-cattle-housing/veranda-waitlist-confirmation'
@@ -574,9 +513,7 @@ const showPostPage = (currentQuestion, request, h) => {
     return h.view('not-eligible', NOT_ELIGIBLE)
   }
 
-  let nextUrl = handleNextUrlSolarPowerCapacity(request, baseUrl, currentQuestion)
-  handleYarKey(yarKey, request, payload, currentQuestion)
-
+  let nextUrl = currentQuestion.nextUrl
 
   const redirectUrl = handleRedirects(baseUrl, request, payload)
   if (redirectUrl) {
