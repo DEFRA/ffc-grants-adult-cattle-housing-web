@@ -49,28 +49,28 @@ const getReplacementText = (request, key, questionType, questionKey, trueReturn,
   return getYarValue(request, key) === getQuestionAnswer(questionType, questionKey, ALL_QUESTIONS) ? trueReturn : falseReturn
 }
 
-const insertYarValue = (field, url, request) => {
+const insertYarValue = (field, request) => {
   return field.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => field.includes('£') ? formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0) : getYarValue(request, additionalYarKeyName))
 }
 
-const titleCheck = (question, title, url, request) => {
+const titleCheck = (question, title, request) => {
   if (title?.includes('{{_')) {
     question = {
       ...question,
-      title: insertYarValue(title, url, request)
+      title: insertYarValue(title, request)
     }
   }
 
   return question
 }
 
-const labelTextCheck = (question, label, url, request) => {
+const labelTextCheck = (question, label, request) => {
   if (label?.text?.includes('{{_')) {
     question = {
       ...question,
       label: {
         ...label,
-        text: insertYarValue(label.text, url, request)
+        text: insertYarValue(label.text, request)
       }
     }
   }
@@ -78,13 +78,13 @@ const labelTextCheck = (question, label, url, request) => {
   return question
 }
 
-const hintTextCheck = (question, hint, url, request) => {
+const hintTextCheck = (question, hint, request) => {
   if (hint?.html?.includes('{{_')) {
     question = {
       ...question,
       hint: {
         ...hint,
-        html: insertYarValue(hint.html, url, request)
+        html: insertYarValue(hint.html, request)
       }
     }
   }
@@ -92,7 +92,7 @@ const hintTextCheck = (question, hint, url, request) => {
   return question
 }
 
-const sidebarCheck = (question, url, request ) => {
+const sidebarCheck = (question, request ) => {
   if (question.sidebar?.values[0]?.content[0]?.para.includes('{{_')) {
     question = {
       ...question,
@@ -102,7 +102,7 @@ const sidebarCheck = (question, url, request ) => {
             ...question.sidebar.values[0],
             content: [{
               ...question.sidebar.values[0].content[0],
-              para: insertYarValue(question.sidebar.values[0].content[0].para, url, request),
+              para: insertYarValue(question.sidebar.values[0].content[0].para, request),
             }
             ]
           }
@@ -122,7 +122,7 @@ const sidebarCheck = (question, url, request ) => {
               {
                 ...question.sidebar.values[0].content[0],
                 items: question.sidebar.values[0].content[0].items.map(item => 
-                  item.includes('{{_') ? insertYarValue(item, url, request) : item
+                  item.includes('{{_') ? insertYarValue(item, request) : item
                 
                 )
               }
@@ -145,7 +145,7 @@ const validateErrorCheck = (question, validate, url, request) => {
       validate: [
         {
           ...validate[0],
-          error: insertYarValue(question.validate[0].error, url, request)
+          error: insertYarValue(question.validate[0].error, request)
         },
         ...validate
       ]
@@ -161,7 +161,7 @@ const ineligibleContentCheck = (question, ineligibleContent, url,  request) => {
       ...question,
       ineligibleContent: {
         ...question.ineligibleContent,
-        messageContent: insertYarValue(ineligibleContent.messageContent,url, request)
+        messageContent: insertYarValue(ineligibleContent.messageContent, request)
       }
     }
   }
@@ -371,11 +371,11 @@ const getPage = async (question, request, h) => {
   }
 
   // formatting variables block
-  question = titleCheck(question, title, url, request)
-  question = sidebarCheck(question, url, request)
+  question = titleCheck(question, title, request)
+  question = sidebarCheck(question, request)
   question = ineligibleContentCheck(question, ineligibleContent, url, request)
-  question = hintTextCheck(question, hint, url, request)
-  question = labelTextCheck(question, label, url, request)
+  question = hintTextCheck(question, hint, request)
+  question = labelTextCheck(question, label, request)
   question =  showHideAnswer(question, request)
 
   // score contains maybe eligible, so can't be included in getUrlSwitchFunction
@@ -448,17 +448,17 @@ const multiInputForLoop = (payload, answers, type, yarKey, request) => {
 
 // formatting variables block - needed for error validations
 const formatVariablesBlock = (currentQuestion, title, baseUrl, request, validate, ineligibleContent, hint) => {
-  currentQuestion = titleCheck(currentQuestion, title, baseUrl, request)
+  currentQuestion = titleCheck(currentQuestion, title, request)
   currentQuestion = validateErrorCheck(currentQuestion, validate, baseUrl, request)
-  currentQuestion = sidebarCheck(currentQuestion, baseUrl, request)
+  currentQuestion = sidebarCheck(currentQuestion, request)
   currentQuestion = ineligibleContentCheck(currentQuestion, ineligibleContent, baseUrl, request)
-  currentQuestion = hintTextCheck(currentQuestion, hint, baseUrl, request)
-  currentQuestion = labelTextCheck(currentQuestion, currentQuestion.label, baseUrl, request)
+  currentQuestion = hintTextCheck(currentQuestion, hint, request)
+  currentQuestion = labelTextCheck(currentQuestion, currentQuestion.label, request)
   currentQuestion = showHideAnswer(currentQuestion, request)
   return currentQuestion
 }
 
-const handleRedirects = (baseUrl, request, payload) => {
+const handleRedirects = (baseUrl, request) => {
   if (baseUrl === PROJECT_TYPE_KEY && VERANDA_FUNDING_CAP_REACHED && getYarValue(request, 'projectType') === getQuestionAnswer(PROJECT_TYPE_KEY, 'project-type-A1', ALL_QUESTIONS)){
     return '/adult-cattle-housing/veranda-funding-cap'
   } else if (baseUrl === 'veranda-confirm' && VERANDA_FUNDING_CAP_REACHED){
@@ -507,15 +507,15 @@ const showPostPage = (currentQuestion, request, h) => {
     }
   }
 
-  if (thisAnswer?.notEligible || (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)) {
+  if (thisAnswer?.notEligible) {
     gapiService.sendGAEvent(request,
       { name: gapiService.eventTypes.ELIMINATION, params: {} })
     return h.view('not-eligible', NOT_ELIGIBLE)
   }
 
-  let nextUrl = currentQuestion.nextUrl
+  const nextUrl = currentQuestion.nextUrl
 
-  const redirectUrl = handleRedirects(baseUrl, request, payload)
+  const redirectUrl = handleRedirects(baseUrl, request)
   if (redirectUrl) {
     return h.redirect(redirectUrl)
   }
