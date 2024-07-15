@@ -337,7 +337,7 @@ const questionBank = {
           title: 'Score results',
           url: 'score',
           baseUrl: 'score',
-          backUrl: 'environmental-data-type',
+          backUrl: 'current-system',
           nextUrl: 'business-details',
           // preValidationKeys: ['environmentalDataType'],
           maybeEligible: true,
