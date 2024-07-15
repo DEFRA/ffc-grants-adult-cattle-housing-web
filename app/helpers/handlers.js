@@ -375,26 +375,6 @@ const getUrlSwitchFunction = async (data, question, request, conditionalHtml, ba
   }
 }
 
-const handleBackUrlRemainingCosts = (request, url, question) => {
-  if (url === 'remaining-costs' && getYarValue(request, 'solarPVSystem') === 'Yes') {
-    if (getYarValue(request, 'projectCost') >= 1250000) {
-      return 'potential-amount'
-    } else if (getYarValue(request, 'calculatedGrant') + getYarValue(request, 'solarCalculatedGrant') > 500000) {
-      return 'potential-amount-solar-capped'
-    } else if (getYarValue(request, 'calculatedGrant') + getYarValue(request, 'solarCalculatedGrant') <= 500000) {
-      if (0.005  >= getYarValue(request, 'solarPowerCapacity') / getYarValue(request, 'solarBirdNumber').toString().replace(/,/g, '')) {
-        return 'potential-amount-solar'
-      } else {
-        return 'potential-amount-solar-calculation'
-      }
-    }
-  } else if (url === 'remaining-costs' && getYarValue(request, 'solarPVSystem') === 'No') {
-    return  'potential-amount'
-  } else {
-    return  question.backUrl
-  }
-}
-
 const getPage = async (question, request, h) => {
   let { url, nextUrlObject, type, title, hint, yarKey, ineligibleContent, label } = question
   const preValidationObject = question.preValidationObject ?? question.preValidationKeys 
@@ -405,40 +385,6 @@ const getPage = async (question, request, h) => {
     return h.redirect(startPageUrl)
   }
 
-  if (url === 'project-cost') {
-    setYarValue(request, 'solarBirdNumber', null)
-    setYarValue(request, 'solarPVCost', null)
-    setYarValue(request, 'solarPowerCapacity', null)
-    setYarValue(request, 'calculatedGrant', null)
-    setYarValue(request, 'solarCalculatedGrant', null)
-    setYarValue(request, 'totalCalculatedGrant', null)
-    setYarValue(request, 'solarCalculatedGrant', null)
-    setYarValue(request, 'totalRemainingCost', null)
-
-    if (getYarValue(request, 'solarPVSystem') === 'Yes'){
-      question.hint.html = question.hint.htmlSolar
-      hint.html = question.hint.htmlSolar
-    } else {
-      question.hint.html = question.hint.htmlNoSolar
-      hint.html = question.hint.htmlNoSolar
-    }
-  }
-
-  if ((url === 'potential-amount-solar-capped' || url === 'potential-amount-solar') && getYarValue(request, 'solarPVCost')) {
-    const projectCost = getYarValue(request, 'projectCost')
-    const calculatedGrant = getYarValue(request, 'calculatedGrant')
-    const solarProjectCost = getYarValue(request, 'solarProjectCost')
-    const solarCalculatedGrant = getYarValue(request, 'solarCalculatedGrant')
-
-    const totalProjectCost = projectCost + solarProjectCost
-    const totalCalculatedGrant = calculatedGrant + Number(solarCalculatedGrant)
-    const cappedSolarProjectCost = 500000 - calculatedGrant
-
-    setYarValue(request, 'totalProjectCost', totalProjectCost)
-    setYarValue(request, 'totalCalculatedGrant', totalCalculatedGrant)
-    setYarValue(request, 'cappedSolarProjectCost', cappedSolarProjectCost)
-  }
-
   // formatting variables block
   question = titleCheck(question, title, url, request)
   question = sidebarCheck(question, url, request)
@@ -446,10 +392,6 @@ const getPage = async (question, request, h) => {
   question = hintTextCheck(question, hint, url, request)
   question = labelTextCheck(question, label, url, request)
   question =  showHideAnswer(question, request)
-
-  // handling back url -> remaining-costs
-  let backUrl = handleBackUrlRemainingCosts(request, url, question)
-  question.backUrl = backUrl
 
   // score contains maybe eligible, so can't be included in getUrlSwitchFunction
   if (url === 'score') {
