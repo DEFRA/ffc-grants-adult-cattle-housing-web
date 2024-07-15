@@ -49,30 +49,7 @@ const getReplacementText = (request, key, questionType, questionKey, trueReturn,
 }
 
 const insertYarValue = (field, url, request) => {
-  field = field.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => {
-    
-    switch (url) {
-      case '1000-birds':
-        return getReplacementText(request, additionalYarKeyName, 'poultry-type', 'poultry-type-A1', 'laying hens', 'pullets')
-      case 'lighting-features':
-        return getReplacementText(request, additionalYarKeyName, 'poultry-type', 'poultry-type-A2', ` <li>a simulated stepped dawn and dusk (unless this is already provided as part of a rearing aviary lighting system)</li>`, '')
-      case 'bird-number':
-        return getReplacementText(request, additionalYarKeyName, 'project-type', 'project-type-A2', 'the refurbished part of this building', 'this new building')
-      case 'project-cost':
-        return getReplacementText(request, additionalYarKeyName, 'project-type', 'project-type-A2', 'refurbishing', 'replacing')
-      case 'ramp-connection':
-      case 'tier-number':
-      case 'current-multi-tier-system': 
-        return getReplacementText(request, additionalYarKeyName, 'poultry-type', 'poultry-type-A1', 'aviary', 'multi-tier')
-      case 'easy-grip-perches':
-        return getReplacementText(request, additionalYarKeyName, 'poultry-type', 'poultry-type-A1', 'an aviary\'s', 'a multi-tier system\'s')
-      case 'veranda-features':
-      return field.includes('{{_poultryType_}}') ? getReplacementText(request, additionalYarKeyName, 'poultry-type', 'poultry-type-A1', 'hen', 'pullet') : 
-        getReplacementText(request, 'poultryType', 'poultry-type', 'poultry-type-A1', '30', '10')
-      default:
-        return field.includes('£') ? formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0) : getYarValue(request, additionalYarKeyName)
-    }
-  })
+  field = field.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => field.includes('£') ? formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0) : getYarValue(request, additionalYarKeyName))
 
   if (url === 'bird-number') {
     const replacement =  getYarValue(request, 'projectType') === getQuestionAnswer('project-type', 'project-type-A3', ALL_QUESTIONS) ? ' when it is complete' : ''
