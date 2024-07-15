@@ -1,21 +1,13 @@
-const scoreDataHen = require('../../../data/score-data-hen')
+const scoreData = require('../../../data/score-data')
 // update to be hen/pullet data. 
 // Test both for correct results pages based on yar/answer
 const { commonFunctionsMock } = require('../../../session-mock')
 const varList = {
 	'current-score': 'wer',
     introducingInnovation: 'wer',
-	poultryType: 'hen'
 }
 
-const utilsList = {
-	'poultry-type-A1': 'hen',
-	'poultry-type-A2': 'pullet'
-}
-
-// answerOptionsList needed for poultryType - hens
-
-commonFunctionsMock(varList, 'Error', utilsList)
+commonFunctionsMock(varList, 'Error')
 
 describe('Score page', () => {
 	let crumCookie
@@ -33,7 +25,7 @@ describe('Score page', () => {
 		}
 	})
 	const getUserScoreSpy = jest.spyOn(newSender, 'getUserScore').mockImplementation(() => {
-		Promise.resolve(scoreDataHen)
+		Promise.resolve(scoreData)
 	})
 
 	beforeEach(async () => {
@@ -110,7 +102,7 @@ describe('Score page', () => {
 		expect(response.result).toContain(crumCookie[ 1 ])
 	})
 
-	it('should load page with success Strong', async () => {
+	it('should load page with success Weak', async () => {
 		jest.mock('@hapi/wreck')
 		const options = {
 			method: 'GET',
@@ -118,8 +110,8 @@ describe('Score page', () => {
 		}
 
 		jest.spyOn(newSender, 'getUserScore').mockImplementationOnce(() => {
-			console.log('Spy: STRONG', JSON.stringify(scoreDataHen));
-			return scoreDataHen;
+			console.log('Spy: STRONG', JSON.stringify(scoreData));
+			return scoreData;
 		})
 
 		const response = await global.__SERVER__.inject(options)
@@ -138,11 +130,10 @@ describe('Score page', () => {
 			method: 'GET',
 			url: `${global.__URLPREFIX__}/score`
 		}
-		scoreDataHen.desirability.overallRating.band = 'Average'
+		scoreData.desirability.overallRating.band = 'Average'
 
 		jest.spyOn(newSender, 'getUserScore').mockImplementationOnce(() => {
-			// console.log('Spy: Average', JSON.stringify(scoreDataHen));
-			return scoreDataHen;
+			return scoreData;
 		})
 
 		const response = await global.__SERVER__.inject(options)
@@ -156,16 +147,15 @@ describe('Score page', () => {
 		expect(getDesirabilityAnswersSpy).toHaveBeenCalledTimes(1)
 		expect(getUserScoreSpy).toHaveBeenCalledTimes(1)
 	})
-	it('should load page with sucess Weak', async () => {
+	it('should load page with sucess Strong', async () => {
 		const options = {
 			method: 'GET',
 			url: `${global.__URLPREFIX__}/score`
 		}
-		scoreDataHen.desirability.overallRating.band = 'Weak'
+		scoreData.desirability.overallRating.band = 'Strong'
 
 		jest.spyOn(newSender, 'getUserScore').mockImplementationOnce(() => {
-			// console.log('Spy: WEAK', JSON.stringify(scoreDataHen));
-			return scoreDataHen;
+			return scoreData;
 		})
 		const response = await global.__SERVER__.inject(options)
 		expect(response.statusCode).toBe(200)
@@ -173,7 +163,7 @@ describe('Score page', () => {
 		expect(header.length).toBe(2)
 		crumCookie = getCrumbCookie(response)
 		expect(response.result).toContain(crumCookie[ 1 ])
-		const responseScoreMessage = 'This means your project is unlikely to be successful.'
+		const responseScoreMessage = 'This means your project is likely to be successful.'
 		expect(response.payload).toContain(responseScoreMessage)
 		expect(getDesirabilityAnswersSpy).toHaveBeenCalledTimes(1)
 		expect(getUserScoreSpy).toHaveBeenCalledTimes(1)
@@ -184,7 +174,7 @@ describe('Score page', () => {
 			method: 'GET',
 			url: `${global.__URLPREFIX__}/score`
 		}
-		scoreDataHen.desirability.overallRating.band = 'Weak'
+		scoreData.desirability.overallRating.band = 'Weak'
 
 		jest.spyOn(newSender, 'getUserScore').mockImplementationOnce(() => { throw new Error('error') })
 
@@ -198,7 +188,7 @@ describe('Score page', () => {
 			method: 'GET',
 			url: `${global.__URLPREFIX__}/score`
 		}
-		scoreDataHen.desirability.overallRating.band = 'Weak'
+		scoreData.desirability.overallRating.band = 'Weak'
 
 		jest.spyOn(newSender, 'getUserScore').mockImplementationOnce(() => { return null })
 
@@ -220,18 +210,4 @@ describe('Score page', () => {
 		expect(postResponse.statusCode).toBe(302)
 		expect(postResponse.headers.location).toBe(`business-details`)
 	})
-	//  commented out as because of prevalidation key is not set yet.
-	// it('redirects to start if no current score or introducing-innovation', async () => {
-	// 	varList[ 'current-score' ] = null
-    //     varList.introducingInnovation = null
-
-	// 	const postOptions = {
-	// 		method: 'GET',
-	// 		url: `${global.__URLPREFIX__}/score`
-	// 	}
-
-	// 	const postResponse = await global.__SERVER__.inject(postOptions)
-	// 	expect(postResponse.statusCode).toBe(302)
-	// 	expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/start`)
-	// }) 
 })

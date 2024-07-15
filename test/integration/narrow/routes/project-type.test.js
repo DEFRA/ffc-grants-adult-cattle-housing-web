@@ -69,7 +69,7 @@ it('user selects ineligible option: \'None of the above\' -> display ineligible 
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
   })
 
-  it('user selects `Replacing the entire building with a new building` -> store user response and redirect to /applicant-type', async () => {
+  it('user selects `Replacing the entire building with a new building` -> store user response and redirect to /current-system', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-type`,
@@ -79,10 +79,10 @@ it('user selects ineligible option: \'None of the above\' -> display ineligible 
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('applicant-type')
+    expect(postResponse.headers.location).toBe('current-system')
   })
 
-  it('user selects `Adding a veranda only to the existing building` -> store user response and redirect to /applicant-type', async () => {
+  it('user selects `Adding a veranda only to the existing building` -> store user response and redirect to /current-system', async () => {
     process.env.VERANDA_FUNDING_CAP_REACHED = 'true'
     const postOptions = {
       method: 'POST',
@@ -93,7 +93,7 @@ it('user selects ineligible option: \'None of the above\' -> display ineligible 
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('applicant-type')
+    expect(postResponse.headers.location).toBe('current-system')
   })
 
   it('user selects `Adding a veranda only to the existing building` -> store user response and redirect to /veranda-funding-cap', async () => {

@@ -1,0 +1,34 @@
+{
+	"grantScheme": {
+		"key": "ADULTCATTLEHOUSING01",
+		"name": "Adult Cattle Housing"
+	},
+	"desirability": {
+		"questions": [
+			{
+				"key": "current-system",
+				"answers": [
+					{
+						"key": "current-system",
+						"title": "What type of adult cattle housing system do you currently use in the building?",
+						"input": [
+							{
+								"key": "current-system-A3",
+								"value": "Barn"
+							}
+						]
+					}
+				],
+				"rating": {
+					"score": null,
+					"band": null,
+					"importance": null
+				}
+			}
+		],
+		"overallRating": {
+			"score": null,
+			"band": "Average"
+		}
+	}
+}

@@ -7,7 +7,7 @@ const isBlockDefaultPageView = url => {
   return blockDefaultPageViews.indexOf(currentUrl) >= 0 && !url.includes('assets')
 }
 
-const grantType = 'Laying Hens'
+const grantType = 'Adult Cattle Housing'
 
 const eventTypes = {
   PAGEVIEW: 'pageview',

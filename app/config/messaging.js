@@ -67,10 +67,10 @@ const config = {
     type: 'topic',
     ...sharedConfig
   },
-  desirabilitySubmittedMsgType: `${msgTypePrefix}.layingHens.desirability.notification`,
-  fetchScoreRequestMsgType: `${msgTypePrefix}.fetch.layingHens.score.request`,
-  eligibilityAnswersMsgType: `${msgTypePrefix}.layingHens.eligibility.details`,
-  contactDetailsMsgType: `${msgTypePrefix}.layingHens.contact.details`,
+  desirabilitySubmittedMsgType: `${msgTypePrefix}.adultCattleHousing.desirability.notification`,
+  fetchScoreRequestMsgType: `${msgTypePrefix}.fetch.adultCattleHousing.score.request`,
+  eligibilityAnswersMsgType: `${msgTypePrefix}.adultCattleHousing.eligibility.details`,
+  contactDetailsMsgType: `${msgTypePrefix}.adultCattleHousing.contact.details`,
   msgSrc: 'ffc-grants-adult-cattle-housing-web'
 }
 
