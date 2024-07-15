@@ -29,6 +29,7 @@ const { tableOrder } = require('./score-table-helper')
 const createMsg = require('../messaging/create-msg')
 const { desirability } = require('./../messaging/scoring/create-desirability-msg')
 const { ALL_QUESTIONS } = require('../config/question-bank')
+const { PROJECT_TYPE_KEY } = require('./contants')
 
 const createModel = (data, backUrl, url) => {
   return {
@@ -52,14 +53,8 @@ const insertYarValue = (field, url, request) => {
   field = field.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => field.includes('£') ? formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0) : getYarValue(request, additionalYarKeyName))
 
   if (url === 'bird-number') {
-    const replacement =  getYarValue(request, 'projectType') === getQuestionAnswer('project-type', 'project-type-A3', ALL_QUESTIONS) ? ' when it is complete' : ''
+    const replacement =  getYarValue(request, 'projectType') === getQuestionAnswer(PROJECT_TYPE_KEY, 'project-type-A3', ALL_QUESTIONS) ? ' when it is complete' : ''
     field = field.replace('[[_extraClause_]]', replacement)
-  }
-
-
-  if (url === 'current-multi-tier-system') {
-    const replacement =  getYarValue(request, 'poultryType') === getQuestionAnswer('poultry-type', 'poultry-type-A1', ALL_QUESTIONS) ? 'an' : 'a'
-    field = field.replace('[[_article_]]', replacement)
   }
 
   return field
@@ -365,14 +360,6 @@ const getUrlSwitchFunction = async (data, question, request, conditionalHtml, ba
       return h.view('check-details', getCheckDetailsModel(request, question, backUrl, nextUrl))
     }
 
-    case 'planning-permission-summary': {
-      const evidenceSummaryModel = getEvidenceSummaryModel(request, question, backUrl, nextUrl)
-      if (evidenceSummaryModel.redirect) {
-        return h.redirect(startPageUrl)
-      }
-      return h.view('evidence-summary', evidenceSummaryModel)
-    }
-
     case 'project': {
       if (getYarValue(request, 'tenancy') === 'Yes') {
         setYarValue(request, 'tenancyLength', null)
@@ -591,7 +578,7 @@ const handleRedirects = (baseUrl, request, payload) => {
   if (baseUrl === 'project-cost' && getYarValue(request, 'solarPVSystem') === 'Yes' && Number(payload[Object.keys(payload)[0]].toString().replace(/,/g, '')) >= 1250000) {
     setYarValue(request, 'totalRemainingCost', Number(getYarValue(request, 'projectCost').toString().replace(/,/g, '')) - 500000)
     return '/adult-cattle-housing/potential-amount'
-  } else if (baseUrl === 'project-type' && VERANDA_FUNDING_CAP_REACHED && getYarValue(request, 'projectType') === getQuestionAnswer('project-type', 'project-type-A1', ALL_QUESTIONS)){
+  } else if (baseUrl === PROJECT_TYPE_KEY && VERANDA_FUNDING_CAP_REACHED && getYarValue(request, 'projectType') === getQuestionAnswer(PROJECT_TYPE_KEY, 'project-type-A1', ALL_QUESTIONS)){
     return '/adult-cattle-housing/veranda-funding-cap'
   } else if (baseUrl === 'veranda-confirm' && VERANDA_FUNDING_CAP_REACHED){
     return '/adult-cattle-housing/veranda-waitlist-confirmation'
