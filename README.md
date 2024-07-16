@@ -1,6 +1,6 @@
-# FFC Laying Hens Web
+# FFC Adult Cattle Housing Web
 
-Web frontend for laying hens
+Web frontend for adult cattle housing
 
 ## Licence
 
@@ -21,7 +21,7 @@ It is designed to encourage use and re-use of information freely and flexibly, w
 
 ## Project Description
 
-This repository contains all the code for the Laying Hens grant frontend application, which provides a series of questions for a user to determine what they need from the grant application, if the grant is something they can apply for and how strong their application is. If the user finishes the application, it also submits their answers along with their contact details for review.
+This repository contains all the code for the Adult Cattle Housing grant frontend application, which provides a series of questions for a user to determine what they need from the grant application, if the grant is something they can apply for and how strong their application is. If the user finishes the application, it also submits their answers along with their contact details for review.
 
 The strength of the application is checked via a request sent to and received from the **ffc-grants-desirability-scoring** service using Azure Service Bus Session Queues, and the users' answers and details are submitted via a request sent to the **ffc-grants-desirability-notification** service using an Azure Service Bus Topic
 
@@ -34,8 +34,8 @@ This application requires the following to be run locally:
 - Docker
 - Access to Azure, and the Azure SND environment
 - A running instance of **ffc-grants-desirability-scoring** (This is optional, and only needed if navigating to or past the _/score_ page)
- - This also means you will need PostgreSQL, with the latest Laying Hens DB script containing the Laying Hens Scoring algorithm
- - This also means you will need A DEFRA VPN connection (AKA being connected to OpenVPN)
+ - This also means you will need PostgreSQL, with the latest Adult Cattle Housing DB script containing the Adult Cattle Housing Scoring algorithm
+ - This also means you will need a DEFRA VPN connection (AKA being connected to OpenVPN)
 - A running instance of **ffc-grants-desirability-notification** (This is optional, and only needed for sending/receiving the Email after the application is complete)
 
 ### Environment Variables
@@ -57,7 +57,7 @@ REDIS_HOSTNAME | The hostname needed for connecting to Azure Redis | N/A
 REDIS_PORT | The port needed for connecting to Azure Redis | N/A
 REDIS_PASSWORD | The password needed for connecting to Azure Redis | N/A
 REDIS_PARTITION | The name of the application, needed for Azure Redis | ffc-grants-adult-cattle-housing-web
-SERVER_TIMEOUT | How long the server timeout should be when running loclaly | 5
+SERVER_TIMEOUT | How long the server timeout should be when running localy | 5
 --- | ---  | ---
 SCORE_REQUEST_QUEUE_ADDRESS | The name of the Azure Service Bus Queue used for sending the score request (without the users initials) | ffc-grants-queue-req
 SCORE_RESPONSE_QUEUE_ADDRESS | The name of the Azure Service Bus Queue used for receiving the score data from the scoring service (without the users initials) | ffc-grants-queue-res
