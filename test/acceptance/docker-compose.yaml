@@ -11,7 +11,7 @@ services:
       CHROME_ARGS: "--headless --ignore-certificate-errors"
 
   selenium:
-    image: selenium/standalone-chrome-debug
+    image: selenium/standalone-chrome
     container_name: chrome-browser
 
   hub:
