@@ -1,4 +1,4 @@
-ARG PARENT_VERSION=1.2.1-node12.18.3
+ARG PARENT_VERSION=2.3.0-node22.4.0
 ARG PORT_DEBUG=9229
 
 # Development
@@ -10,4 +10,6 @@ EXPOSE ${PORT_DEBUG}
 COPY --chown=node:node package*.json ./
 RUN npm install
 COPY --chown=node:node . .
+USER root
+RUN apk add --no-cache openjdk11
 CMD [ "npm", "run", "test" ]

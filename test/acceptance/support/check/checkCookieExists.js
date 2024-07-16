@@ -4,22 +4,22 @@
  * @param  {[type]}   falseCase Whether or not to check if the cookie exists or
  *                              not
  */
-export default (name, falseCase) => {
+export default async (name, falseCase) => {
   /**
      * The cookie as retrieved from the browser
      * @type {Object}
      */
-  const cookie = browser.getCookies(name)
+  const cookie = await browser.getCookies(name)
 
   if (falseCase) {
-    expect(cookie.length).to.equal(
+    await expect(cookie.length).to.equal(
       0,
       `Expected cookie "${name}" not to exists but it does`
     )
   } else {
-    expect(cookie.length).to.not.equal(
+    await expect(cookie.length).to.not.equal(
       0,
       `Expected cookie "${name}" to exists but it does not`
     )
   }
-}
+};

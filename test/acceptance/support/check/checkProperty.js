@@ -8,7 +8,7 @@
  *                                  attribute matches or not
  * @param  {String}   expectedValue The value to match against
  */
-export default (isCSS, attrName, selector, falseCase, expectedValue) => {
+export default async (isCSS, attrName, selector, falseCase, expectedValue) => {
   /**
      * The command to use for fetching the expected value
      * @type {String}
@@ -25,9 +25,9 @@ export default (isCSS, attrName, selector, falseCase, expectedValue) => {
      * The actual attribute value
      * @type {Mixed}
      */
-  let attributeValue = $(selector)[command](attrName)
+  let attributeValue = await $(selector)[command](attrName)
 
-  expectedValue = isFinite(expectedValue)
+  expectedValue = (await isFinite(expectedValue))
     ? parseFloat(expectedValue)
     : expectedValue
 
@@ -39,14 +39,14 @@ export default (isCSS, attrName, selector, falseCase, expectedValue) => {
     attributeValue = attributeValue.value
   }
   if (falseCase) {
-    expect(attributeValue).to.not
+    await expect(attributeValue).to.not
       .equal(expectedValue,
         `${attrType}: ${attrName} of element "${selector}" should ` +
         `not contain "${attributeValue}"`)
   } else {
-    expect(attributeValue).to
+    await expect(attributeValue).to
       .equal(expectedValue,
         `${attrType}: ${attrName} of element "${selector}" should ` +
         `contain "${attributeValue}", but "${expectedValue}"`)
   }
-}
+};

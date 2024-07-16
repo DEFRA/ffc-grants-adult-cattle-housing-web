@@ -1,7 +1,7 @@
 const { ReportAggregator, HtmlReporter } = require('@rpii/wdio-html-reporter')
 const log4js = require('@log4js-node/log4js-api')
 const logger = log4js.getLogger('default')
-const envRoot = (process.env.TEST_ENVIRONMENT_ROOT_URL || 'http://host.docker.internal:3000')
+const envRoot = (process.env.TEST_ENVIRONMENT_ROOT_URL || 'http://host.docker.internal:3600')
 const chromeArgs = process.env.CHROME_ARGS ? process.env.CHROME_ARGS.split(' ') : []
 const maxInstances = process.env.MAX_INSTANCES ? Number(process.env.MAX_INSTANCES) : 5
 
@@ -32,7 +32,7 @@ exports.config = {
   connectionRetryCount: 3,
   services: ['selenium-standalone'],
   framework: 'cucumber',
-  specFileRetries: 3,
+  specFileRetries: 1,
   specFileRetriesDelay: 30,
   reporters: ['spec',
     [HtmlReporter, {
@@ -48,20 +48,45 @@ exports.config = {
 
   // If you are using Cucumber you need to specify the location of your step definitions.
   cucumberOpts: {
-    require: ['./steps/**/*.js'], // <string[]> (file/dir) require files before executing features
-    backtrace: false, // <boolean> show full backtrace for errors
-    requireModule: ['@babel/register'], // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
-    dryRun: false, // <boolean> invoke formatters without executing steps
-    failFast: false, // <boolean> abort the run on first failure
-    format: ['pretty'], // <string[]> (type[:path]) specify the output format, optionally supply PATH to redirect formatter output (repeatable)
-    colors: true, // <boolean> disable colors in formatter output
-    snippets: true, // <boolean> hide step definition snippets for pending steps
-    source: true, // <boolean> hide source uris
-    profile: [], // <string[]> (name) specify the profile to use
-    strict: false, // <boolean> fail if there are any undefined or pending steps
-    tagExpression: '', // <string> (expression) only execute the features or scenarios with tags matching the expression
-    timeout: 60000, // <number> timeout for step definitions
-    ignoreUndefinedDefinitions: false // <boolean> Enable this config to treat undefined definitions as warnings.
+    require: ['./steps/**/*.js'],
+
+    // <boolean> show full backtrace for errors
+    backtrace: false,
+
+    requireModule: [],
+
+    // <boolean> invoke formatters without executing steps
+    dryRun: false,
+
+    // <boolean> abort the run on first failure
+    failFast: false,
+
+    // <string[]> (type[:path]) specify the output format, optionally supply PATH to redirect formatter output (repeatable)
+    format: ['pretty'],
+
+    // <boolean> disable colors in formatter output
+    colors: true,
+
+    // <boolean> hide step definition snippets for pending steps
+    snippets: true,
+
+    // <boolean> hide source uris
+    source: true,
+
+    // <string[]> (name) specify the profile to use
+    profile: [],
+
+    // <boolean> fail if there are any undefined or pending steps
+    strict: false,
+
+    // <string> (expression) only execute the features or scenarios with tags matching the expression
+    tagExpression: '',
+
+    // <number> timeout for step definitions
+    timeout: 60000,
+
+    // <boolean> Enable this config to treat undefined definitions as warnings.
+    ignoreUndefinedDefinitions: false
   },
 
   // =====
@@ -89,7 +114,7 @@ exports.config = {
     })()
   },
 
-  beforeSession: function () {
+  beforeSession: async function () {
     const chai = require('chai')
 
     global.expect = chai.expect
@@ -97,7 +122,7 @@ exports.config = {
     global.should = chai.should()
   },
 
-  afterStep: function (featureName, feature, result, ctx) {
+  afterStep: async function (featureName, feature, result, ctx) {
     if (result.passed) {
       return
     }
@@ -109,7 +134,7 @@ exports.config = {
     const timestamp = moment().format('YYYYMMDD-HHmmss.SSS')
     const filepath = path.join('./html-reports/screenshots/', screenshotFileName + '-' + timestamp + '.png')
 
-    browser.saveScreenshot(filepath)
+    await browser.saveScreenshot(filepath)
     process.emit('test:screenshot', filepath)
   }
 }

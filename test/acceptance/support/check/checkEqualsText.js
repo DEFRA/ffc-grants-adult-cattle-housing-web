@@ -6,7 +6,7 @@
  *                                  given text or not
  * @param  {String}   expectedText  The text to validate against
  */
-export default (elementType, selector, falseCase, expectedText) => {
+export default async (elementType, selector, falseCase, expectedText) => {
   /**
      * The command to execute on the browser object
      * @type {String}
@@ -15,7 +15,7 @@ export default (elementType, selector, falseCase, expectedText) => {
 
   if (
     elementType === 'button' ||
-        $(selector).getAttribute('value') === null
+        (await $(selector).getAttribute('value')) === null
   ) {
     command = 'getText'
   }
@@ -44,11 +44,11 @@ export default (elementType, selector, falseCase, expectedText) => {
     boolFalseCase = true
   }
 
-  const text = browser[command](selector)
+  const text = await browser[command](selector)
 
   if (boolFalseCase) {
-    parsedExpectedText.should.not.equal(text)
+    await parsedExpectedText.should.not.equal(text)
   } else {
-    parsedExpectedText.should.equal(text)
+    await parsedExpectedText.should.equal(text)
   }
-}
+};

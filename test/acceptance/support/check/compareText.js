@@ -5,28 +5,28 @@
  *                              elements match or not
  * @param  {String}   selector2  Element selector for the second element
  */
-export default (selector1, falseCase, selector2) => {
+export default async (selector1, falseCase, selector2) => {
   /**
      * The text of the first element
      * @type {String}
      */
-  const text1 = $(selector1).getText()
+  const text1 = await $(selector1).getText()
 
   /**
      * The text of the second element
      * @type {String}
      */
-  const text2 = $(selector2).getText()
+  const text2 = await $(selector2).getText()
 
   if (falseCase) {
-    expect(text1).to.not.equal(
+    await expect(text1).to.not.equal(
       text2,
       `Expected text not to be "${text1}"`
     )
   } else {
-    expect(text1).to.equal(
+    await expect(text1).to.equal(
       text2,
       `Expected text to be "${text1}" but found "${text2}"`
     )
   }
-}
+};

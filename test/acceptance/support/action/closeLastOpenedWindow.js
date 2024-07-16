@@ -3,13 +3,13 @@
  * @param  {String}   obsolete Type of object to close (window or tab)
  */
 
-export default (obsolete) => {
+export default async obsolete => {
   /**
      * The last opened window handle
      * @type {Object}
      */
-  const lastWindowHandle = browser.getWindowHandles().slice(-1)[0]
+  const lastWindowHandle = (await browser.getWindowHandles()).slice(-1)[0]
 
-  browser.closeWindow()
-  browser.switchToWindow(lastWindowHandle)
-}
+  await browser.closeWindow()
+  await browser.switchToWindow(lastWindowHandle)
+};

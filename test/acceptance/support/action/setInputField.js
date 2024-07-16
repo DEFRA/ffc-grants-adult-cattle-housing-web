@@ -7,7 +7,7 @@ import checkIfElementExists from '../lib/checkIfElementExists'
  * @param  {String}   value   The value to set the selector to
  * @param  {String}   selector Element selector
  */
-export default (method, value, selector) => {
+export default async (method, value, selector) => {
   /**
      * The command to perform on the browser object (addValue or setValue)
      * @type {String}
@@ -16,11 +16,11 @@ export default (method, value, selector) => {
 
   let checkValue = value
 
-  checkIfElementExists(selector, false)
+  await checkIfElementExists(selector, false)
 
   if (!value) {
     checkValue = ''
   }
 
-  $(selector)[command](checkValue)
-}
+  await $(selector)[command](checkValue)
+};

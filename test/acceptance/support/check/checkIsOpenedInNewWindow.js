@@ -4,14 +4,14 @@
  * @param  {String}   obsolete    Indicator for the type (window or tab) unused
  */
 
-export default (expectedUrl, obsolete) => {
+export default async (expectedUrl, obsolete) => {
   /**
      * All the current window handles
      * @type {Object}
      */
-  const windowHandles = browser.getWindowHandles()
+  const windowHandles = await browser.getWindowHandles()
 
-  expect(windowHandles).length.to.not.equal(1, 'A popup was not opened')
+  await expect(windowHandles).length.to.not.equal(1, 'A popup was not opened')
 
   /**
      * The last opened window handle
@@ -20,16 +20,16 @@ export default (expectedUrl, obsolete) => {
   const lastWindowHandle = windowHandles.slice(-1)
 
   // Make sure we focus on the last opened window handle
-  browser.switchToWindow(lastWindowHandle[0])
+  await browser.switchToWindow(lastWindowHandle[0])
 
   /**
      * Get the URL of the current browser window
      * @type {String}
      */
-  const windowUrl = browser.getUrl()
+  const windowUrl = await browser.getUrl()
 
-  expect(windowUrl).to
+  await expect(windowUrl).to
     .contain(expectedUrl, 'The popup has a incorrect getUrl')
 
-  browser.closeWindow()
-}
+  await browser.closeWindow()
+};
