@@ -57,7 +57,6 @@ REDIS_HOSTNAME | The hostname needed for connecting to Azure Redis | N/A
 REDIS_PORT | The port needed for connecting to Azure Redis | N/A
 REDIS_PASSWORD | The password needed for connecting to Azure Redis | N/A
 REDIS_PARTITION | The name of the application, needed for Azure Redis | ffc-grants-adult-cattle-housing-web
-SERVER_TIMEOUT | How long the server timeout should be when running localy | 5
 --- | ---  | ---
 SCORE_REQUEST_QUEUE_ADDRESS | The name of the Azure Service Bus Queue used for sending the score request (without the users initials) | ffc-grants-queue-req
 SCORE_RESPONSE_QUEUE_ADDRESS | The name of the Azure Service Bus Queue used for receiving the score data from the scoring service (without the users initials) | ffc-grants-queue-res
