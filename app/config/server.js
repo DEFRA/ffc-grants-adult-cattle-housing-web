@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const urlPrefix = '/adult-cattle-housing'
 const startPageUrl = '/start'
-const serviceEndDate = '2024/07/12'
+const serviceEndDate = '2025/07/12'
 const serviceEndTime = '23:59:59'
 
 require('dotenv').config()
