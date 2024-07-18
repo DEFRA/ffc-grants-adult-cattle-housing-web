@@ -5,7 +5,7 @@
 {% set urlPrefix = "<%= htmlWebpackPlugin.options.metadata.urlPrefix %>" %}
 {% set assetPath = urlPrefix + "/assets" %}
 {% set timeoutPath = urlPrefix + "/session-timeout" %}
-{% set siteTitle = "Check if you can apply for a Laying Hens Housing for Health and Welfare Grant - GOV.UK" %}
+{% set siteTitle = "Check if you can apply for an Adult Cattle Housing Grant - GOV.UK" %}
 {% block pageTitle %}
   {{ siteTitle }}
 {% endblock %}
@@ -17,18 +17,17 @@
     {% endif %}
   {% endblock %}
   {% block header %}
-    {% set phase_banner_html %} This is a new service – your
-    <a class="govuk-link" href="{{ surveyLink }}" target="_blank" rel="noopener noreferrer">feedback</a>
-    will help us to improve it. {% endset %}
+    {% set phase_banner_html %} This is not a full service. It is not production code and you might experience problems. {% endset %}
     {{ govukHeader({
         homepageUrl: "https://www.gov.uk/",
-        serviceName: "Check if you can apply for a Laying Hens Housing for Health and Welfare Grant",
+        serviceName: "Check if you can apply for an Adult Cattle Housing Grant",
         serviceUrl: urlPrefix + "/start"
       }) }}
     <div class="govuk-grid-row govuk-width-container">
       {{ govukPhaseBanner({
           tag: {
-            text: "beta"
+            text: "Prototype",
+            classes: 'govuk-tag--pink'
           },
           html: phase_banner_html
         }) }}

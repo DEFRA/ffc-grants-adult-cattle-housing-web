@@ -11,45 +11,34 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <title>Check if you can apply for a Laying Hens Housing for Health and Welfare Grant</title>
+      <title>Check if you can apply for an Adult Cattle Housing Grant</title>
       <div class="govuk-body">
-        <h1 class="govuk-heading-xl">Check if you can apply for a Laying Hens Housing for Health and Welfare Grant</h1>
+        <h1 class="govuk-heading-xl">Check if you can apply for an Adult Cattle Housing Grant</h1>
         <p>Use this service to check:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>if you are eligible to apply for a grant for your project (takes about 20 minutes)</li>
-          <li>how your project scores against the grant funding priorities (takes about 15 minutes if you have all the project details)</li>
+          <li>if you are eligible to apply for a grant for your project (takes about 5 minutes)</li>
+          <li>how well your project scores against the funding priorities (takes about 15 minutes if you have all the project details)</li>
         </ul>
         <h2 class="govuk-heading-m">Who can apply</h2>
-        <p class="govuk-body">You can apply if you:</p>
+        <p class="govuk-body">You can apply if you either:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>are the registered keeper of 1,000 or more laying hens or pullets</li>
-          <li>will do the grant-funded work in England</li>
+          <li>are a grower or producer of agricultural or horticultural produce</li>
+          <li>are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers</li>
+          <li>produce wild vension products as part of woodland management</li>
         </ul>
         <h2 class="govuk-heading-m">What you can apply for</h2>
-        <p>You can apply for up to {{ grantPercentage }}% of the estimated project costs of either:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>a veranda-only project, to add a veranda on to existing laying hen or pullet housing</li>
-          <li>a comprehensive project, to refurbish or replace existing laying hen or pullet housing in line with the grant funding requirements</li>
-        </ul>
-        <p>As part of a comprehensive project for laying hens, you must also include a veranda if you have enough outside space. This must be at least either:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>4 metres wide along the length of the hen housing area</li>
-          <li>30% of the indoor hen housing area footprint</li>
-        </ul>
-        <p>As part of a comprehensive project, you can apply for up to 25% of the estimated costs of buying and installing a solar PV system 
-          which produces up to 5 kilowatts (kW) of power capacity per 1,000 birds. 
+        <p>You must do the grant-funded work in England.</p>
+
+        <p>You can apply for up to 50% of the estimated costs of project items. You have the option to apply for up to 25% of the estimated cost of buying and installing a solar PV system.
         </p>
         <p>You must submit a separate application for each building if you are applying for grant funding for multiple buildings. You cannot 
           apply for both comprehensive and veranda-only projects.
         </p>
-        <p>The maximum total grant amount each business can apply for is £500,000 for comprehensive projects or £100,000 for veranda-only projects.</p>
-        <p>The minimum grant is £15,000 ({{ grantPercentage }}% of £37,500) for comprehensive projects or £5,000 ({{ grantPercentage }}% of £12,500) 
-          for veranda-only projects.
-        </p>
+        <p>The minimum grant for project items is £20,000 ({{ grantPercentage }}% of £40,000). The maximum grant you can apply for, including solar, is £50,000)</p>
         <p>The Rural Payments Agency (RPA) will award the veranda-only grant funding on a first come, first served basis.</p>
         
         {{ govukInsetText({
-          text: 'If your project is eligible, you will be able to submit your online application to the RPA.'
+          text: 'If your project is eligible, you will be able to submit your online application to the Rural Payments Agency (RPA).'
         }) }}
 
         {{ govukButton({
@@ -63,22 +52,21 @@
 
       <p class="govuk-body">To use the checker, you need:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>information about the project (for example, planning permission requirements, insulation type, ventilation system capacity, aviary or multi-tier system information, veranda specifications)</li>
-        <li>an estimate of the total cost of the project</li>
-        <li>information about your business (for example, county parish holding (CPH) number, number of employees, turnover)</li>
+        <li>information about your business (for example, number of employees, turnover)</li>
+        <li>information about the project (for example, the types of products being processed and how you will add value, the impact the project will have)</li>
+        <li>a list of the items you'd like to buy for the project</li>
+        <li>an estimate of the total cost of the items</li>
       </ul>
-      
-      <p class="govuk-body govuk-!-margin-bottom-8">If you do not enter any information for more than 20 minutes, your application will time out and you will have to start again.</p>
     
       <h2 class="govuk-heading-m">Problems using the online service</h2>
-      <p class="govuk-body">If you have any problems using the online service, call the RPA and follow the options for the Farming Investment Fund scheme.</p>
+      <p class="govuk-body">If you have any problems using the online service, contact the RPA.</p>
 
       <br><h3 class="govuk-heading-s">Telephone</h3>
       <ul class="govuk-list">
       <li>Telephone: 0300 0200 301</li>
       <li>Monday to Friday, 9am to 5pm (except public holidays)</li>
       </ul>
-      <p class="govuk-body"><a class="govuk-link" target="_blank" rel="noopener noreferrer" href="https://www.gov.uk/call-charges">Find out about call charges (opens in a new tab)</a></p>
+      <p class="govuk-body"><a class="govuk-link" target="_blank" rel="noopener noreferrer" href="https://www.gov.uk/call-charges">Find out about call charges</a></p>
       <h3 class="govuk-heading-s">Email</h3>
       <p class="govuk-body"><a class="govuk-link" title="Send email to RPA" href="mailto:FTF@rpa.gov.uk">FTF@rpa.gov.uk</a></p>
     </div>
