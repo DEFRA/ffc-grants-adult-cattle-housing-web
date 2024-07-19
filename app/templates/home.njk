@@ -26,16 +26,11 @@
           <li>are a business processing agricultural or horticultural products that is at least 50% owned by agricultural or horticultural producers</li>
           <li>produce wild vension products as part of woodland management</li>
         </ul>
-        <h2 class="govuk-heading-m">What you can apply for</h2>
+
         <p>You must do the grant-funded work in England.</p>
 
-        <p>You can apply for up to 50% of the estimated costs of project items. You have the option to apply for up to 25% of the estimated cost of buying and installing a solar PV system.
-        </p>
-        <p>You must submit a separate application for each building if you are applying for grant funding for multiple buildings. You cannot 
-          apply for both comprehensive and veranda-only projects.
-        </p>
-        <p>The minimum grant for project items is £20,000 ({{ grantPercentage }}% of £40,000). The maximum grant you can apply for, including solar, is £50,000)</p>
-        <p>The Rural Payments Agency (RPA) will award the veranda-only grant funding on a first come, first served basis.</p>
+        <p>You can apply for up to {{ grantPercentage }}% of the estimated cost of project items. You have the option to apply for up to 25% of the estimated cost of buying and installing a solar PV system.</p>
+        <p>The minimum grant for project items is £{{ minGrant }} ({{ grantPercentage }}% of £40,000). The maximum grant you can apply for, including solar, is £{{ maxGrant }}.</p>
         
         {{ govukInsetText({
           text: 'If your project is eligible, you will be able to submit your online application to the Rural Payments Agency (RPA).'

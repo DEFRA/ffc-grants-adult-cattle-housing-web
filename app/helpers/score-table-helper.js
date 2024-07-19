@@ -1,12 +1,12 @@
 const tableOrder = [
   {
-    key: 'current-system',
+    key: 'impact',
     order: 1,
-    title: 'Current system',
-    pageTitle: 'Current system',
-    url: 'current-system',
-    fundingPriorities: 'Support the transition out of colony cages',
-    yarKey: 'currentSystem'
+    title: 'Impact',
+    pageTitle: 'Impact',
+    url: 'impact',
+    fundingPriorities: 'Improve processing and supply chains and grow your business',
+    yarKey: 'impact'
   }
 ]
 

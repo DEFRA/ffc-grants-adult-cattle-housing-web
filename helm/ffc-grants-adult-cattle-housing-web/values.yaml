@@ -66,7 +66,6 @@ container:
   scoreResponseQueueAddress: ffc-grants-desirability-scoring-res
   desirabilitySubmittedTopicAddress: desirability-submitted
   notifyEmailTemplate: dummy-template
-  notifyEmailVerandaTemplate: dummy-template
   worksheetProtectPassword:
   worksheetProtectEnabled: false
   sendEmailToRpa: false
@@ -74,8 +73,7 @@ container:
   worksheetHideEmptyRows: false
   excelUploadEnvironment: dummy
   grantPercentage: dummy
-  grantPercentageSolar: dummy
-  verandaFundingCapReached: dummy
+  fundingCapReached: dummy
 
 
 livenessProbe:

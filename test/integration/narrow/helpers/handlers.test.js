@@ -29,12 +29,10 @@ describe('Get & Post Handlers', () => {
   }
 
   const utilsList = {
-    'current-system-A1': 'Colony cage',
-    'current-system-A2': 'Combi-cage',
-    'current-system-A3': 'Barn',
-    'current-system-A4': 'Free range',
-    'current-system-A5': 'Organic',
-    'current-system-A6': 'None of the above',
+    'impact-A1': 'Increasing range of added-value products',
+    'impact-A2': 'Increasing volume of added-value products',
+    'impact-A3': 'Allow selling direct to consumer',
+    'impact-A4': 'Creating added-value products for the first time'
   }
 
   jest.mock('../../../../app/helpers/urls', () => ({

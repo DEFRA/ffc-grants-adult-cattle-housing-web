@@ -15,8 +15,8 @@ describe('Create submission message', () => {
     'solar-PV-system-A2': 'No',
     'rearing-aviary-system-A1': 'Yes',
     'step-up-system-A1': 'Yes',
-    'current-system-A1': 'Colony cage',
-    'current-system-A2': 'Combi-cage',
+    'impact-A1': 'Increasing range of added-value products',
+    'impact-A2': 'Increasing volume of added-value products',
   }
   commonFunctionsMock(varList, undefined, utilsList, undefined)
 
@@ -154,7 +154,7 @@ describe('Create submission message', () => {
     expect(msg.spreadsheet.worksheets[0]).toHaveProperty('defaultColumnWidth')
     expect(msg.spreadsheet.worksheets[0]).toHaveProperty('protectPassword')
     expect(msg.spreadsheet.worksheets[0]).toHaveProperty('rows')
-    expect(msg.spreadsheet.worksheets[0].rows.length).toBe(116)
+    expect(msg.spreadsheet.worksheets[0].rows.length).toBe(58)
 })
 
   test('Protect password property should not be set if config is false', () => {
