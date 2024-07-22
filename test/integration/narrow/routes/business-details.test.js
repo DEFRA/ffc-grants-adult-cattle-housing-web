@@ -66,6 +66,11 @@ describe('Page: /business-details', () => {
       expect(postResponse.payload).toContain('Enter the number of employees')
       expect(postResponse.payload).toContain('Enter your annual business turnover')
       expect(postResponse.payload).toContain('Enter your Country parish holding (CPH) number')
+      delete valList.projectName
+      delete valList.businessName
+      delete valList.numberEmployees
+      delete valList.businessTurnover
+      delete valList.cph
     })
 
     it('user came from \'CHECK DETAILS\' page -> display <Back to details> button', async () => {
@@ -78,6 +83,7 @@ describe('Page: /business-details', () => {
       const response = await global.__SERVER__.inject(options)
       expect(response.statusCode).toBe(200)
       expect(response.payload).toContain('Back to details')
+      delete varList.reachedCheckDetails
     })
   })
 
@@ -100,10 +106,10 @@ describe('Page: /business-details', () => {
       const postResponse = await global.__SERVER__.inject(postOptions)
       expect(postResponse.statusCode).toBe(200)
       expect(postResponse.payload).toContain('Project name must be 30 characters or fewer')
+      delete valList.projectName
     })
 
     it('should validate business name - maximum characters is 30', async () => {
-
       valList.businessName = {
         error: 'Business name must be 30 characters or fewer',
         return: false
@@ -121,6 +127,7 @@ describe('Page: /business-details', () => {
       const postResponse = await global.__SERVER__.inject(postOptions)
       expect(postResponse.statusCode).toBe(200)
       expect(postResponse.payload).toContain('Business name must be 30 characters or fewer')
+      delete valList.businessName
     })
 
     describe('Number of employees', () => {
@@ -143,6 +150,7 @@ describe('Page: /business-details', () => {
         const postResponse = await global.__SERVER__.inject(postOptions)
         expect(postResponse.statusCode).toBe(200)
         expect(postResponse.payload).toContain('Number of employees must be a whole number, like 305')
+        delete valList.numberEmployees
       })
 
       it('should validate number of employees - maximum number of employees is 9999999', async () => {
@@ -164,9 +172,14 @@ describe('Page: /business-details', () => {
         const postResponse = await global.__SERVER__.inject(postOptions)
         expect(postResponse.statusCode).toBe(200)
         expect(postResponse.payload).toContain('Number must be between 1-9999999')
+        delete valList.numberEmployees
       })
 
       it('should validate number of employees - minimum number of employees is 1', async () => {
+        valList.numberEmployees = {
+          error: 'Number must be between 1-9999999',
+          return: false
+        }
         const postOptions = {
           method: 'POST',
           url: `${global.__URLPREFIX__}/business-details`,
@@ -180,15 +193,24 @@ describe('Page: /business-details', () => {
         const postResponse = await global.__SERVER__.inject(postOptions)
         expect(postResponse.statusCode).toBe(200)
         expect(postResponse.payload).toContain('Number must be between 1-9999999')
+        delete valList.numberEmployees
       })
     })
 
     describe('Business turnover', () => {
-      it('should validate business turnover - only digits', async () => {
+
+      beforeEach(() => {
         valList.businessTurnover = {
           error: 'Enter your annual business turnover, in pounds',
           return: false
         }
+      })
+
+      afterEach(() => {
+        delete valList.businessTurnover
+      })
+
+      it('should validate business turnover - only digits', async () => {
         const postOptions = {
           method: 'POST',
           url: `${global.__URLPREFIX__}/business-details`,
@@ -221,10 +243,6 @@ describe('Page: /business-details', () => {
       })
 
       it('should validate business turnover - maximum value is 999999999', async () => {
-        valList.businessTurnover = {
-          error: 'Enter your annual business turnover, in pounds',
-          return: false
-        }
         const postOptions = {
           method: 'POST',
           url: `${global.__URLPREFIX__}/business-details`,
@@ -258,11 +276,19 @@ describe('Page: /business-details', () => {
     })
 
     describe('SBI', () => {
-      it('should validate SBI, if entered - only digits', async () => {
+
+      beforeEach(() => {
         valList.sbi = {
           error: 'SBI number must have 9 characters, like 011115678',
           return: false
         }
+      })
+
+      afterEach(() => {
+        delete valList.sbi
+      })
+
+      it('should validate SBI, if entered - only digits', async () => {
         const postOptions = {
           method: 'POST',
           url: `${global.__URLPREFIX__}/business-details`,
@@ -344,6 +370,18 @@ describe('Page: /business-details', () => {
     })
   
     describe('CPH', () => {
+
+      beforeEach(() => {
+        valList.cph = {
+          error: 'Enter your Country parish holding CPH number, like 12/345/6789',
+          return: false
+        }
+      })
+
+      afterEach(() => {
+        delete valList.cph
+      })
+      
       it('should validate CPH - only digits', async () => {
         valList.cph = {
           error: 'Enter your Country parish holding CPH number, like 12/345/6789',

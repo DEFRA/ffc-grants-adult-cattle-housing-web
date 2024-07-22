@@ -125,6 +125,7 @@ describe('Score page', () => {
 		expect(getDesirabilityAnswersSpy).toHaveBeenCalledTimes(1)
 		expect(getUserScoreSpy).toHaveBeenCalledTimes(1)
 	})
+
 	it('should load page with success Average', async () => {
 		const options = {
 			method: 'GET',
@@ -147,6 +148,7 @@ describe('Score page', () => {
 		expect(getDesirabilityAnswersSpy).toHaveBeenCalledTimes(1)
 		expect(getUserScoreSpy).toHaveBeenCalledTimes(1)
 	})
+
 	it('should load page with sucess Strong', async () => {
 		const options = {
 			method: 'GET',

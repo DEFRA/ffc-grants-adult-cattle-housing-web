@@ -16,6 +16,7 @@ const {
 
 const { LIST_COUNTIES } = require('ffc-grants-common-functionality').counties
 
+const { formatUKCurrency } = require('../helpers/data-formats')
 const {
   MIN_GRANT,
   MAX_GRANT,
@@ -226,8 +227,7 @@ const questionBank = {
             },
             {
               key: 'items-needed-A4',
-              value: 'None of the above',
-              notEligible: true
+              value: 'None of the above'
             }
           ],
           yarKey: 'itemsNeeded'
@@ -267,7 +267,7 @@ const questionBank = {
           },
           hint: {
             html: `
-              <p>You can only apply for a grant of up to ${GRANT_PERCENTAGE}% of the estimated costs. The minimum grant you can apply for this project is £${MIN_GRANT} (${GRANT_PERCENTAGE}% of £62,500). The maximum grant is £${MAX_GRANT}.</p>
+              <p>You can only apply for a grant of up to ${GRANT_PERCENTAGE}% of the estimated costs. The minimum grant you can apply for this project is £${formatUKCurrency(MIN_GRANT)} (${GRANT_PERCENTAGE}% of £62,500). The maximum grant is £${formatUKCurrency(MAX_GRANT)}.</p>
               <p>Do not include VAT</p>
               <p>Enter amount, for example 95,000</p>
             `

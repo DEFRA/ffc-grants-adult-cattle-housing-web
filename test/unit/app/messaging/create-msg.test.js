@@ -34,26 +34,23 @@ describe('create-msg', () => {
     getYarValue.mockImplementation((req, key) => (dict[key]))
 
     dict = {
-      currentSystem: 'hello',
+      impact: ['hello'],
     }
     expect(getDesirabilityAnswers({})).toEqual({
-      currentSystem: 'hello',
+      impact: ['hello'],
     })
 
     dict = {
-      currentSystem: 'hello',
+      impact: ['hello'],
     }
     expect(getDesirabilityAnswers({})).toEqual({
-      currentSystem: 'hello',
+      impact: ['hello'],
     })
 
     dict = {
-      currentSystem: null,
+      impact: null,
     }
-
     expect(getDesirabilityAnswers({})).toEqual(null)
-
-
   })
 
   test('getAllDetails', () => {

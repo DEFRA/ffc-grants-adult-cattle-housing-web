@@ -5,24 +5,6 @@ const { getQuestionByKey, allAnswersSelected } = require('ffc-grants-common-func
 const { ALL_QUESTIONS } = require('./../config/question-bank')
 
 
-const getDependentSideBar = (sidebar, request) => {
-  const { values, dependentQuestionKeys } = sidebar
-  dependentQuestionKeys.forEach((dependentQuestionKey, index) => {
-    const yarKey = getQuestionByKey(dependentQuestionKey, ALL_QUESTIONS).yarKey
-    const selectedAnswers = getYarValue(request, yarKey)
-
-    if (selectedAnswers) {
-      values[index].content[0].items = [selectedAnswers].flat()
-    } else {
-      values[index].content[0].items = ['Not needed']
-    }
-
-  })
-  return {
-    ...sidebar
-  }
-}
-
 const getBackUrl = (hasScore, backUrlObject, backUrl, request) => {
   const url = getUrl(backUrlObject, backUrl, request)
   return hasScore && (url === 'remaining-costs') ? null : url
