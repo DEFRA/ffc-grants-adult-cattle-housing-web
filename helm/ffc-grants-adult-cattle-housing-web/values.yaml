@@ -72,6 +72,8 @@ container:
   rpaEmail: FTF@rpa.gov.uk
   worksheetHideEmptyRows: false
   excelUploadEnvironment: dummy
+  minGrant: 20000
+  maxGrant: 500000
   grantPercentage: dummy
   fundingCapReached: dummy
 
