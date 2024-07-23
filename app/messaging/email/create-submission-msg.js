@@ -1,7 +1,6 @@
 const emailConfig = require('./config/email')
 const { GRANT_PERCENTAGE } = require('../../helpers/grant-details')
 const spreadsheetConfig = require('./config/spreadsheet')
-const { getQuestionAnswer } = require('ffc-grants-common-functionality').utils
 const { microEmployeesNum, smallEmployeesNum, mediumEmployeesNum } = require('./business-size-constants')
 
 const IMPACT_ROW_NUMBER = 503;
