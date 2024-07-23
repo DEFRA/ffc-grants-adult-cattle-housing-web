@@ -241,13 +241,6 @@ const questionBank = {
           baseUrl: 'project-cost',
           backUrl: 'items-needed',
           nextUrl: 'impact',
-          // preValidationObject: {
-          //   preValidationKeys: ['roofSupportSolarPV', 'roofSolarPVExemption', 'solarPVSystem'],
-          //   preValidationAnswer: ['roof-support-solar-PV-A1', 'roof-solar-PV-exemption-A1', 'roof-solar-PV-exemption-A2', 'roof-solar-PV-exemption-A3', 'roof-solar-PV-exemption-A4', 'roof-solar-PV-exemption-A5', 'roof-solar-PV-exemption-A6', 'solar-PV-system-A1'],
-          //   preValidationRule: 'OR',
-          //   preValidationUrls: ['roof-support-solar-PV', 'roof-solar-PV-exemption', 'solar-PV-system']
-          // },
-          // preValidationKeys: ['solarPVSystem'],
           fundingPriorities: '',
           grantInfo: {
             minGrant: MIN_GRANT,
@@ -402,12 +395,6 @@ const questionBank = {
           //refactoring needed here
           backUrl: 'score',
           nextUrl: 'applying',
-          // preValidationObject: {
-          //   preValidationKeys: ['environmentalDataType', 'remainingCosts'],
-          //   preValidationAnswer: ['environmental-data-type-A1', 'environmental-data-type-A2', 'environmental-data-type-A3', 'environmental-data-type-A4', 'environmental-data-type-A5', 'veranda-remaining-costs-A1'],
-          //   preValidationRule: 'OR',
-          //   preValidationUrls: ['environmental-data-type', 'veranda-remaining-costs']
-          // },
           fundingPriorities: '',
           type: 'multi-input',
           minAnswerCount: '',
