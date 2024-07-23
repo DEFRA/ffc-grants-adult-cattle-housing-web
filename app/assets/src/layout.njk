@@ -17,7 +17,9 @@
     {% endif %}
   {% endblock %}
   {% block header %}
-    {% set phase_banner_html %} This is not a full service. It is not production code and you might experience problems. {% endset %}
+    {% set phase_banner_html %} This is a new service – your
+    <a class="govuk-link" href="{{ surveyLink }}" target="_blank" rel="noopener noreferrer">feedback</a>
+    will help us to improve it. {% endset %}
     {{ govukHeader({
         homepageUrl: "https://www.gov.uk/",
         serviceName: "Check if you can apply for an Adult Cattle Housing Grant",
