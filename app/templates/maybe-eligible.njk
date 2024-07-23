@@ -60,15 +60,15 @@
       {% endif %}
 
       {% if middleWarning %} 
-      {{ govukWarningText(middleWarning) }}
+        {{ govukWarningText(middleWarning) }}
       {% endif %}
 
       {% if extraMessageContent %}
         <div class="govuk-body">{{ extraMessageContent | safe}}</div>
       {% endif %}
 
-      {% if warning %} 
-      {{ govukWarningText(warning) }}
+      {% if url !== 'confirm' and warning %} 
+        {{ govukWarningText(warning) }}
       {% endif %}
 
       {% if addText %} 
@@ -83,7 +83,7 @@
         <p class="govuk-body"><a href="{{messageLink.url}}" class="govuk-link">{{messageLink.title}}</a></p>
       {% endif %}
 
-      {% if not consentOptionalData and not reference and not NoBtnVerandaFundingCap %}
+      {% if not consentOptionalData and not reference %}
         {% if customButtonText %}
           {% set buttonText = customButtonText %}
         {% else %}
@@ -95,17 +95,20 @@
                 attributes: {id: "btnContinue"},
                 href: nextUrl
               })}}
-        {% endif %}
+      {% endif %}
     </div>
   </div>
 
 
-  {%if url === 'confirm' or url === 'veranda-confirm' %}
+  {%if url === 'confirm'%}
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="{{ url }}" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukCheckboxes(checkboxConfirmOptional) }}
           {{ govukInput(consentOptionalData.hiddenInput) }}
+        {% if url === 'confirm' and warning %} 
+          {{ govukWarningText(warning) }}
+        {% endif %}
         {{ govukButton({
           text: "Confirm and send",
           attributes: {id: "btnConfirmSend"}
