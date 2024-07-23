@@ -2,8 +2,12 @@ const { getHtml } = require('../helpers/conditionalHTML');
 const { getYarValue, setYarValue } = require('ffc-grants-common-functionality').session
 const { setOptionsLabel } = require('ffc-grants-common-functionality').answerOptions
 
-const getConfirmationId = (guid, request) => {
-  return `${guid.substr(0, 3)}-${guid.substr(3, 3)}`.toUpperCase();
+const CONFIRMATION_ID_START_SEGMENT_FIRST_INDEX = 0
+const CONFIRMATION_ID_START_SEGMENT_LAST_INDEX = 3
+const CONFIRMATION_ID_END_SEGMENT_INDEX = 3
+
+const getConfirmationId = (guid) => {
+  return `${guid.substr(CONFIRMATION_ID_START_SEGMENT_FIRST_INDEX, CONFIRMATION_ID_START_SEGMENT_LAST_INDEX)}-${guid.substr(CONFIRMATION_ID_END_SEGMENT_INDEX, CONFIRMATION_ID_END_SEGMENT_INDEX)}`.toUpperCase();
 }
 
 const handleConditinalHtmlData = (type, labelData, yarKey, request) => {

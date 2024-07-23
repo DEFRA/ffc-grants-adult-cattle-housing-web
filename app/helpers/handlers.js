@@ -237,31 +237,23 @@ const scorePageData = async (request, backUrl, url, h) => {
 }
 
 const handlePotentialAmount = (request, maybeEligibleContent, url) => {
-  if (url === 'potential-amount' && getYarValue(request, 'projectCost') > 1250000 && getYarValue(request, 'solarPVSystem') === 'No'){
+  if (url === 'potential-amount' && getYarValue(request, 'projectCost') > 1250000){
     return {
       ...maybeEligibleContent,
       messageContent: 'You may be able to apply for a grant of up to £500,000, based on the estimated cost of £{{_projectCost_}}.',
       extraMessageContent: 'The maximum grant you can apply for is £500,000.'
     }
-  } else if (url === 'potential-amount' && getYarValue(request, 'projectCost') >= 1250000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
-    return {
-      ...maybeEligibleContent,
-      messageContent: `You may be able to apply for a grant of up to £500,000, based on the estimated cost of £{{_projectCost_}}.</br></br>
-      The maximum grant you can apply for is £500,000.`,
-      insertText: { text:'You cannot apply for funding for a solar PV system if you have requested the maximum funding amount for building project costs.' },
-      extraMessageContent: 'You can continue to check your eligibility for grant funding to replace or refurbish a {{_poultryType_}} house.'
-    }
   }
   return maybeEligibleContent
 }
 
-const handleConfirmation = async (url, request, confirmationId, maybeEligibleContent, h) => {
+const handleConfirmation = async (request, confirmationId, maybeEligibleContent, h) => {
   if (maybeEligibleContent.reference) {
     if (!getYarValue(request, 'consentMain')) {
       return h.redirect(startPageUrl)
     }
 
-    confirmationId = getConfirmationId(request.yar.id, request)
+    confirmationId = getConfirmationId(request.yar.id)
     try {
       const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), scoring: getYarValue(request, 'overAllScore') }, request.yar.id)
       await senders.sendDesirabilitySubmitted(emailData, request.yar.id)
@@ -322,7 +314,7 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
     consentOptionalData = getConsentOptionalData(consentOptional)
   }
 
-  maybeEligibleContent = await handleConfirmation(url, request, confirmationId, maybeEligibleContent, h)
+  maybeEligibleContent = await handleConfirmation(request, confirmationId, maybeEligibleContent, h)
 
   const MAYBE_ELIGIBLE = { ...maybeEligibleContent, consentOptionalData, url, nextUrl, backUrl }
   return h.view('maybe-eligible', MAYBE_ELIGIBLE)

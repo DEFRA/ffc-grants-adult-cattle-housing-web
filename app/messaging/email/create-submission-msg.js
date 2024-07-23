@@ -4,6 +4,8 @@ const spreadsheetConfig = require('./config/spreadsheet')
 const { getQuestionAnswer } = require('ffc-grants-common-functionality').utils
 const { microEmployeesNum, smallEmployeesNum, mediumEmployeesNum } = require('./business-size-constants')
 
+const IMPACT_ROW_NUMBER = 503;
+
 function getQuestionScoreBand(questions, questionKey) {
   return questions.filter(question => question.key === questionKey).length > 0
     ? questions.find(question => question.key === questionKey).rating.band
@@ -56,7 +58,7 @@ function addAgentDetails(agentsDetails) {
 
 function getScoringFields(submission) {
   return [
-    generateRow(503, 'Impact', submission.impact),
+    generateRow(IMPACT_ROW_NUMBER, 'Impact', submission.impact),
   ]
 }
 
