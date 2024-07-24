@@ -6,7 +6,8 @@ const { getYarValue, setYarValue } = require('ffc-grants-common-functionality').
 const { getQuestionAnswer } = require('ffc-grants-common-functionality').utils
 const { guardPage } = require('ffc-grants-common-functionality').pageGuard
 const { getUrl } = require('../helpers/urls')
-const { GRANT_PERCENTAGE, VERANDA_FUNDING_CAP_REACHED } = require('./grant-details')
+const { GRANT_PERCENTAGE } = require('./grant-details')
+const { inspect } = require('util')
 const senders = require('../messaging/senders')
 
 const { startPageUrl, urlPrefix, serviceEndDate, serviceEndTime } = require('./../config/server')
@@ -27,7 +28,6 @@ const { tableOrder } = require('./score-table-helper')
 const createMsg = require('../messaging/create-msg')
 const { desirability } = require('./../messaging/scoring/create-desirability-msg')
 const { ALL_QUESTIONS } = require('../config/question-bank')
-const { PROJECT_TYPE_KEY } = require('./constants')
 
 const createModel = (data, backUrl, url) => {
   return {
@@ -237,48 +237,23 @@ const scorePageData = async (request, backUrl, url, h) => {
 }
 
 const handlePotentialAmount = (request, maybeEligibleContent, url) => {
-  if (url === 'potential-amount' && getYarValue(request, 'projectCost') > 1250000 && getYarValue(request, 'solarPVSystem') === 'No'){
+  if (url === 'potential-amount' && getYarValue(request, 'projectCost') > 1250000){
     return {
       ...maybeEligibleContent,
       messageContent: 'You may be able to apply for a grant of up to £500,000, based on the estimated cost of £{{_projectCost_}}.',
       extraMessageContent: 'The maximum grant you can apply for is £500,000.'
     }
-  } else if (url === 'potential-amount' && getYarValue(request, 'projectCost') >= 1250000 && getYarValue(request, 'solarPVSystem') === 'Yes'){
-    return {
-      ...maybeEligibleContent,
-      messageContent: `You may be able to apply for a grant of up to £500,000, based on the estimated cost of £{{_projectCost_}}.</br></br>
-      The maximum grant you can apply for is £500,000.`,
-      insertText: { text:'You cannot apply for funding for a solar PV system if you have requested the maximum funding amount for building project costs.' },
-      extraMessageContent: 'You can continue to check your eligibility for grant funding to replace or refurbish a {{_poultryType_}} house.'
-    }
-  } else if (url === 'veranda-potential-amount' && getYarValue(request, 'projectCost') > 250000) {
-    return {
-      ...maybeEligibleContent,
-      potentialAmountConditional: true
-    }
-  } else if (url === 'veranda-potential-amount' && getYarValue(request, 'projectCost') <= 250000) {
-    return {
-      ...maybeEligibleContent,
-      potentialAmountConditional: false
-    }
   }
   return maybeEligibleContent
 }
 
-const handleConfirmation = async (url, request, confirmationId, maybeEligibleContent, h) => {
+const handleConfirmation = async (request, confirmationId, maybeEligibleContent, h) => {
   if (maybeEligibleContent.reference) {
     if (!getYarValue(request, 'consentMain')) {
       return h.redirect(startPageUrl)
     }
 
-    if ((url === 'confirmation' || url === 'veranda-confirmation' || url === 'veranda-waitlist-confirmation') && getYarValue(request, 'projectResponsibility') === getQuestionAnswer('current-system','current-system-A3', ALL_QUESTIONS)){
-      maybeEligibleContent = {
-        ...maybeEligibleContent,
-        addText: true
-      }
-    }
-
-    confirmationId = getConfirmationId(request.yar.id, request)
+    confirmationId = getConfirmationId(request.yar.id)
     try {
       const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), scoring: getYarValue(request, 'overAllScore') }, request.yar.id)
       await senders.sendDesirabilitySubmitted(emailData, request.yar.id)
@@ -334,12 +309,12 @@ const maybeEligibleGet = async (request, confirmationId, question, url, nextUrl,
     ) : '',
   }
 
-  if (url === 'confirm' || url === 'veranda-confirm') {
+  if (url === 'confirm') {
     const consentOptional = getYarValue(request, 'consentOptional')
     consentOptionalData = getConsentOptionalData(consentOptional)
   }
 
-  maybeEligibleContent = await handleConfirmation(url, request, confirmationId, maybeEligibleContent, h)
+  maybeEligibleContent = await handleConfirmation(request, confirmationId, maybeEligibleContent, h)
 
   const MAYBE_ELIGIBLE = { ...maybeEligibleContent, consentOptionalData, url, nextUrl, backUrl }
   return h.view('maybe-eligible', MAYBE_ELIGIBLE)
@@ -374,7 +349,7 @@ const getPage = async (question, request, h) => {
   question = ineligibleContentCheck(question, ineligibleContent, request)
   question = hintTextCheck(question, hint, request)
   question = labelTextCheck(question, label, request)
-  question =  showHideAnswer(question, request)
+  question = showHideAnswer(question, request)
 
   // score contains maybe eligible, so can't be included in getUrlSwitchFunction
   if (url === 'score') {
@@ -456,15 +431,6 @@ const formatVariablesBlock = (currentQuestion, title, request, validate, ineligi
   return currentQuestion
 }
 
-const handleRedirects = (baseUrl, request) => {
-  if (baseUrl === PROJECT_TYPE_KEY && VERANDA_FUNDING_CAP_REACHED && getYarValue(request, 'projectType') === getQuestionAnswer(PROJECT_TYPE_KEY, 'project-type-A1', ALL_QUESTIONS)){
-    return '/adult-cattle-housing/veranda-funding-cap'
-  } else if (baseUrl === 'veranda-confirm' && VERANDA_FUNDING_CAP_REACHED){
-    return '/adult-cattle-housing/veranda-waitlist-confirmation'
-  }
-  return null
-}
-
 const showPostPage = (currentQuestion, request, h) => {
   let { yarKey, answers, baseUrl, ineligibleContent, nextUrlObject, title, hint, type, validate } = currentQuestion
   const payload = request.payload
@@ -492,9 +458,7 @@ const showPostPage = (currentQuestion, request, h) => {
 
   const solarPVSystem = getYarValue(request, 'solarPVSystem')
 
-  if (baseUrl === 'veranda-project-cost'){
-    NOT_ELIGIBLE = { ...NOT_ELIGIBLE, specificTitle: `The minimum grant you can apply for is £5,000 (${GRANT_PERCENTAGE}% of £12,500)` }
-  } else if (baseUrl === 'project-cost') {
+  if (baseUrl === 'project-cost') {
     const insertText = solarPVSystem === 'Yes' ? { 
       text: 'You cannot apply for funding for solar PV system if you have not requested the minimum grant funding amount for a building.' 
     } : ''
@@ -512,11 +476,6 @@ const showPostPage = (currentQuestion, request, h) => {
   }
 
   const nextUrl = currentQuestion.nextUrl
-
-  const redirectUrl = handleRedirects(baseUrl, request)
-  if (redirectUrl) {
-    return h.redirect(redirectUrl)
-  }
     
   if (thisAnswer?.redirectUrl) {
     return h.redirect(thisAnswer?.redirectUrl)

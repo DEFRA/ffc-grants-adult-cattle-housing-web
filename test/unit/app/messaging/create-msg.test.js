@@ -1,3 +1,6 @@
+process.env.MIN_GRANT = 20000
+process.env.MAX_GRANT = 500000
+
 describe('create-msg', () => {
 
   jest.mock('ffc-grants-common-functionality', () => ({
@@ -34,26 +37,23 @@ describe('create-msg', () => {
     getYarValue.mockImplementation((req, key) => (dict[key]))
 
     dict = {
-      currentSystem: 'hello',
+      impact: ['hello'],
     }
     expect(getDesirabilityAnswers({})).toEqual({
-      currentSystem: 'hello',
+      impact: ['hello'],
     })
 
     dict = {
-      currentSystem: 'hello',
+      impact: ['hello'],
     }
     expect(getDesirabilityAnswers({})).toEqual({
-      currentSystem: 'hello',
+      impact: ['hello'],
     })
 
     dict = {
-      currentSystem: null,
+      impact: null,
     }
-
     expect(getDesirabilityAnswers({})).toEqual(null)
-
-
   })
 
   test('getAllDetails', () => {

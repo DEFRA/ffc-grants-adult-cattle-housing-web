@@ -66,16 +66,16 @@ container:
   scoreResponseQueueAddress: ffc-grants-desirability-scoring-res
   desirabilitySubmittedTopicAddress: desirability-submitted
   notifyEmailTemplate: dummy-template
-  notifyEmailVerandaTemplate: dummy-template
   worksheetProtectPassword:
   worksheetProtectEnabled: false
   sendEmailToRpa: false
   rpaEmail: FTF@rpa.gov.uk
   worksheetHideEmptyRows: false
   excelUploadEnvironment: dummy
+  minGrant: 20000
+  maxGrant: 500000
   grantPercentage: dummy
-  grantPercentageSolar: dummy
-  verandaFundingCapReached: dummy
+  fundingCapReached: dummy
 
 
 livenessProbe:

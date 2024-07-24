@@ -16,13 +16,13 @@ function getAllDetails (request, confirmationId) {
 }
 
 const desirabilityAnswersSchema = Joi.object({
-  currentSystem: Joi.string(),
+  impact: Joi.array().items(Joi.string()),
 })
 
 function getDesirabilityAnswers (request) {
   try {
     const val = {
-      currentSystem: getYarValue(request, 'currentSystem'),
+      impact: getDataFromYarValue(request, 'impact', multiAnswer),
     }
 
     const result = desirabilityAnswersSchema.validate(val, {
