@@ -7,7 +7,6 @@ const { getQuestionAnswer } = require('ffc-grants-common-functionality').utils
 const { guardPage } = require('ffc-grants-common-functionality').pageGuard
 const { getUrl } = require('../helpers/urls')
 const { GRANT_PERCENTAGE } = require('./grant-details')
-const { inspect } = require('util')
 const senders = require('../messaging/senders')
 
 const { startPageUrl, urlPrefix, serviceEndDate, serviceEndTime } = require('./../config/server')
@@ -128,6 +127,12 @@ const sidebarCheck = (question, request ) => {
           }
         ]
       }
+    }
+  }
+  if (question.sidebar) {
+    question = {
+      ...question,
+      sidebar: createMsg.getDependentSideBar(ALL_QUESTIONS, question.sidebar, request)
     }
   }
 

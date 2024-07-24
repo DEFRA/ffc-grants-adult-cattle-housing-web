@@ -1,9 +1,28 @@
 const { YAR_KEYS } = require('../config/question-bank')
 const Joi = require('joi')
 const { getDataFromYarValue } = require('./../helpers/pageHelpers')
+const { getQuestionByKey } = require('ffc-grants-common-functionality').utils
 const { getYarValue } = require('ffc-grants-common-functionality').session
 
 const multiAnswer = 'multi-answer'
+
+const getDependentSideBar = (questions, sidebar, request) => {
+  const { values, dependentQuestionKeys } = sidebar
+  dependentQuestionKeys?.forEach((dependentQuestionKey, index) => {
+    const yarKey = getQuestionByKey(dependentQuestionKey, questions).yarKey
+    const selectedAnswers = getYarValue(request, yarKey)
+
+    if (selectedAnswers) {
+      values[index].content[0].items = [selectedAnswers].flat()
+    } else {
+      values[index].content[0].items = ['Not needed']
+    }
+
+  })
+  return {
+    ...sidebar
+  }
+}
 
 function getAllDetails (request, confirmationId) {
   return YAR_KEYS.reduce(
@@ -40,5 +59,6 @@ function getDesirabilityAnswers (request) {
 
 module.exports = {
   getDesirabilityAnswers,
-  getAllDetails
+  getAllDetails,
+  getDependentSideBar
 }

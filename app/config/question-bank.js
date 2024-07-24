@@ -287,11 +287,12 @@ const questionBank = {
             }
           ],
           sidebar: {
+            dependentQuestionKeys: ['items-needed'],
             values: [{
               heading: 'Selected items',
-              content: [{
+              content: [ {
                 para: '',
-                items: ['Constructing or improving buildings for processing', 'Processing equipment or machinery', 'Retail facilities', 'Storage facilities']
+                items: []
               }],
             }]
           },
