@@ -1,3 +1,6 @@
+process.env.MIN_GRANT = 20000
+process.env.MAX_GRANT = 500000
+
 describe('create-msg', () => {
 
   jest.mock('ffc-grants-common-functionality', () => ({

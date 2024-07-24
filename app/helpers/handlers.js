@@ -434,7 +434,6 @@ const formatVariablesBlock = (currentQuestion, title, request, validate, ineligi
 const showPostPage = (currentQuestion, request, h) => {
   let { yarKey, answers, baseUrl, ineligibleContent, nextUrlObject, title, hint, type, validate } = currentQuestion
   const payload = request.payload
-  console.log(`showPostPage payload=${inspect(payload)}`)
 
   if (baseUrl !== 'score') {
     setYarValue(request, 'onScorePage', false)

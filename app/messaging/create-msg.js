@@ -1,7 +1,7 @@
 const { YAR_KEYS } = require('../config/question-bank')
 const Joi = require('joi')
+const { getDataFromYarValue } = require('./../helpers/pageHelpers')
 const { getYarValue } = require('ffc-grants-common-functionality').session
-const { inspect } = require('util')
 
 const multiAnswer = 'multi-answer'
 
@@ -21,9 +21,8 @@ const desirabilityAnswersSchema = Joi.object({
 
 function getDesirabilityAnswers (request) {
   try {
-    console.log(`REQUEST=${inspect(request)}`)
     const val = {
-      impact: getYarValue(request, 'impact'),
+      impact: getDataFromYarValue(request, 'impact', multiAnswer),
     }
 
     const result = desirabilityAnswersSchema.validate(val, {
