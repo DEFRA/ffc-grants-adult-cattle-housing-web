@@ -10,6 +10,4 @@ EXPOSE ${PORT_DEBUG}
 COPY --chown=node:node package*.json ./
 RUN npm install
 COPY --chown=node:node . .
-USER root
-RUN apk add --no-cache openjdk11
 CMD [ "npm", "run", "test" ]

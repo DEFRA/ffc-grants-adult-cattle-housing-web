@@ -2,18 +2,18 @@ services:
   wdio-cucumber:
     build: .
     image: wdio-cucumber
-    container_name: webdriver-cuke
     depends_on:
       - selenium
-      - hub
+    volumes:
+      - ./features/:/home/node/features/
+      - ./steps/:/home/node/steps/
+      - ./html-reports/:/home/node/html-reports/
+      - ./package.json:/home/node/package.json
+    ports:
+      - "9228:9229"
     environment:
-      TEST_ENVIRONMENT_ROOT_URL: docker.host.internal:3600
-      CHROME_ARGS: "--headless --ignore-certificate-errors"
+      TEST_ENVIRONMENT_ROOT_URL: http://host.docker.internal:3600
 
   selenium:
     image: selenium/standalone-chrome
     container_name: chrome-browser
-
-  hub:
-    image: selenium/hub
-    container_name: selenium-hub
