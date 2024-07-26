@@ -17,3 +17,5 @@ services:
   selenium:
     image: selenium/standalone-chrome
     container_name: chrome-browser
+    volumes:
+      - /dev/shm:/dev/shm

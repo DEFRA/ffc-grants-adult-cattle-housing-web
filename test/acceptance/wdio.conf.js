@@ -89,6 +89,7 @@ exports.config = {
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
     baseUrl: process.env.TEST_ENVIRONMENT_ROOT_URL,
+    //baseUrl: "http://host.docker.internal:3600",
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
