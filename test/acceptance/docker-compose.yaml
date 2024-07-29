@@ -6,6 +6,7 @@ services:
       - selenium
     volumes:
       - ./features/:/home/node/features/
+      - ./pages/:/home/nodes/pages/
       - ./steps/:/home/node/steps/
       - ./html-reports/:/home/node/html-reports/
       - ./package.json:/home/node/package.json

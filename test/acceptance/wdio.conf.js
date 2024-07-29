@@ -88,8 +88,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: process.env.TEST_ENVIRONMENT_ROOT_URL,
-    //baseUrl: "http://host.docker.internal:3600",
+    baseUrl: process.env.TEST_ENVIRONMENT_ROOT_URL || "http://host.docker.internal:3600",
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -269,8 +268,9 @@ exports.config = {
      * @param {number}                 result.duration  duration of scenario in milliseconds
      * @param {object}                 context          Cucumber World object
      */
-    // afterScenario: function (world, result, context) {
-    // },
+    afterScenario: async function (world, result, context) {
+        await browser.reloadSession();
+    },
     /**
      *
      * Runs after a Cucumber Feature.

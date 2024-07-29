@@ -1,7 +1,7 @@
 Feature: Applying for an Adult Cattle Housing Grant
-    Illustrates scenarios around applying for a Farming Transformation Fund Adult Cattle Housing Grant.
+    Illustrates scenarios applying for a Future Farming and Countryside Programme Adult Cattle Housing Grant.
 
-    Scenario: User applies for an Adult Cattle Housing Grant
+    Scenario: User successfully applies for a grant
         # start
         Given the user navigates to "/adult-cattle-housing/start"
         And clicks on "Accept analytics cookies"
@@ -10,12 +10,12 @@ Feature: Applying for an Adult Cattle Housing Grant
 
         # legal-status
         Then the user should see heading "What is the legal status of the business?"
-        When the user selects option "Limited company"
+        And the user selects "Limited company"
         And continues
 
         # items-needed
         Then the user should see heading "What eligible items does your project need?"
-        When the user chooses the following
+        When the user selects the following
         | Constructing or improving buildings for housing |
         | Processing equipment or machinery               |
         And continues
@@ -27,7 +27,7 @@ Feature: Applying for an Adult Cattle Housing Grant
 
         # impact
         Then the user should see heading "What impact will this project have?"
-        When the user chooses the following
+        When the user selects the following
         | Allow selling direct to consumer                 |
         | Creating added-value products for the first time |
         And continues
@@ -35,6 +35,11 @@ Feature: Applying for an Adult Cattle Housing Grant
         # score
         Then the user should see heading "Score results"
         And should see "Weak" for their project's score
+        And should see the following scoring answers
+        | SECTION | ANSWERS                                          | SCORE | FUNDING PRIORITIES                                          |
+        | Impact  | Allow selling direct to consumer                 | Weak  | Improve processing and supply chains and grow your business |
+        |         | Creating added-value products for the first time |       |                                                             |
+
         When the user continues
 
         # business-details
@@ -51,7 +56,7 @@ Feature: Applying for an Adult Cattle Housing Grant
 
         # applying
         Then the user should see heading "Who is applying for this grant?"
-        When the user selects option "Applicant"
+        When the user selects "Applicant"
         And continues
         
         # applicant-details
@@ -83,3 +88,68 @@ Feature: Applying for an Adult Cattle Housing Grant
         # confirmation
         Then the user should see heading "Details submitted"
         And should see a reference number for their application
+
+    Scenario: User is ineligible on legal status
+        # start
+        Given the user navigates to "/adult-cattle-housing/start"
+        And clicks on "Accept analytics cookies"
+        When the user clicks on "Start now"
+
+        # legal-status
+        Then the user should see heading "What is the legal status of the business?"
+        When the user selects "None of the above"
+        And continues
+        Then the user should see heading "You cannot apply for a grant from this scheme"
+
+        When the user goes back
+        Then the user should see heading "What is the legal status of the business?"
+
+    Scenario: User changes a weak score to a strong score    
+        # start
+        Given the user navigates to "/adult-cattle-housing/start"
+        And clicks on "Accept analytics cookies"
+        When the user clicks on "Start now"
+
+        # legal-status
+        And the user selects "Limited company"
+        And continues
+
+        # items-needed
+        When the user selects the following
+        | Constructing or improving buildings for housing |
+        And continues
+
+        # project-cost
+        When the user enters "100000" in "projectCost"
+        And continues
+
+        # impact
+        When the user selects the following
+        | Creating added-value products for the first time |
+        And continues
+
+        # score
+        Then the user should see "Weak" for their project's score
+        And should see the following scoring answers
+        | SECTION | ANSWERS                                          | SCORE | FUNDING PRIORITIES                                          |
+        | Impact  | Creating added-value products for the first time | Weak  | Improve processing and supply chains and grow your business |
+        When the user chooses to change their "Impact" answers
+  
+        # impact
+        Then the user should see heading "What impact will this project have?"
+        When the user selects the following
+        | Increasing range of added-value products         |
+        | Increasing volume of added-value products        |
+        | Allow selling direct to consumer                 |
+        | Creating added-value products for the first time |
+        And continues
+
+        # score
+        Then the user should see heading "Score results"
+        And should see "Strong" for their project's score
+        And should see the following scoring answers
+        | SECTION | ANSWERS                                          | SCORE  | FUNDING PRIORITIES                                          |
+        | Impact  | Increasing range of added-value products         | Strong | Improve processing and supply chains and grow your business |
+        |         | Increasing volume of added-value products        |        |                                                             |
+        |         | Allow selling direct to consumer                 |        |                                                             |
+        |         | Creating added-value products for the first time |        |                                                             |
