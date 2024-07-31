@@ -9,31 +9,35 @@ Feature: Applying for an Adult Cattle Housing Grant
         When the user clicks on "Start now"
 
         # legal-status
-        Then the user should see heading "What is the legal status of the business?"
-        And the user selects "Limited company"
+        Then the user should be at URL "legal-status"
+        And should see heading "What is the legal status of the business?"
+        When the user selects "Limited company"
         And continues
 
         # items-needed
-        Then the user should see heading "What eligible items does your project need?"
+        Then the user should be at URL "items-needed"
+        And should see heading "What eligible items does your project need?"
         When the user selects the following
         | Constructing or improving buildings for housing |
         | Processing equipment or machinery               |
         And continues
 
         # project-cost
-        Then the user should see heading label "What is the estimated cost of the items?"
+        Then the user should be at URL "project-cost"
+        And should see heading label "What is the estimated cost of the items?"
         When the user enters "100000" in "projectCost"
         And continues
 
         # impact
-        Then the user should see heading "What impact will this project have?"
+        Then the user should be at URL "impact"
+        And should see heading "What impact will this project have?"
         When the user selects the following
         | Allow selling direct to consumer                 |
         | Creating added-value products for the first time |
         And continues
 
         # score
-        Then the user should see heading "Score results"
+        Then the user should be at URL "score"
         And should see "Weak" for their project's score
         And should see the following scoring answers
         | SECTION | ANSWERS                                          | SCORE | FUNDING PRIORITIES                                          |
@@ -43,7 +47,8 @@ Feature: Applying for an Adult Cattle Housing Grant
         When the user continues
 
         # business-details
-        Then the user should see heading "Business details"
+        Then the user should be at URL "business-details"
+        And should see heading "Business details"
         When the user enters the following
         | FIELD                              | VALUE                    | ID               |
         | Project name                       | Home Farm Cattle Project | projectName      |
@@ -55,12 +60,14 @@ Feature: Applying for an Adult Cattle Housing Grant
         And continues
 
         # applying
-        Then the user should see heading "Who is applying for this grant?"
+        Then the user should be at URL "applying"
+        And should see heading "Who is applying for this grant?"
         When the user selects "Applicant"
         And continues
         
         # applicant-details
-        Then the user should see heading "Applicant's details"
+        Then the user should be at URL "applicant-details"
+        And should see heading "Applicant's details"
         When the user enters the following
         | FIELD                 | VALUE                          | ID                  |
         | First name            | Andrew                         | firstName           |
@@ -78,15 +85,18 @@ Feature: Applying for an Adult Cattle Housing Grant
         And continues
 
         # check-details
-        Then the user should see heading "Check your details"
+        Then the user should be at URL "check-details"
+        And should see heading "Check your details"
         And continues
 
         # confirm
-        Then the user should see heading "Confirm and send"
+        Then the user should be at URL "confirm"
+        And should see heading "Confirm and send"
         And confirms and sends
 
         # confirmation
-        Then the user should see heading "Details submitted"
+        Then the user should be at URL "confirmation"
+        And should see heading "Details submitted"
         And should see a reference number for their application
 
     Scenario: User is ineligible on legal status
@@ -96,7 +106,9 @@ Feature: Applying for an Adult Cattle Housing Grant
         When the user clicks on "Start now"
 
         # legal-status
-        Then the user should see heading "What is the legal status of the business?"
+        Then the user should be at URL "legal-status"
+        And should see heading "What is the legal status of the business?"
+
         When the user selects "None of the above"
         And continues
         Then the user should see heading "You cannot apply for a grant from this scheme"
@@ -111,7 +123,7 @@ Feature: Applying for an Adult Cattle Housing Grant
         When the user clicks on "Start now"
 
         # legal-status
-        And the user selects "Limited company"
+        When the user selects "Limited company"
         And continues
 
         # items-needed
@@ -136,7 +148,7 @@ Feature: Applying for an Adult Cattle Housing Grant
         When the user chooses to change their "Impact" answers
   
         # impact
-        Then the user should see heading "What impact will this project have?"
+        Then the user should be at URL "impact"
         When the user selects the following
         | Increasing range of added-value products         |
         | Increasing volume of added-value products        |
@@ -145,7 +157,7 @@ Feature: Applying for an Adult Cattle Housing Grant
         And continues
 
         # score
-        Then the user should see heading "Score results"
+        Then the user should be at URL "score"
         And should see "Strong" for their project's score
         And should see the following scoring answers
         | SECTION | ANSWERS                                          | SCORE  | FUNDING PRIORITIES                                          |
