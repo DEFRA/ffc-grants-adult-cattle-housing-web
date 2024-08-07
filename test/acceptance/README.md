@@ -42,7 +42,7 @@ Feature: ...
 To run only the tests with specific tag(s) use the `--cucumberOpts.tagExpression=` parameter like so:
 
 ```sh
-$ npx wdio wdio.conf.js --cucumberOpts.tagExpression='@Tag or @AnotherTag'
+$ npx wdio wdio.conf.js --cucumberOpts.tags='@Tag or @AnotherTag'
 ```
 
 For more tag options please see the [Cucumber.js documentation](https://docs.cucumber.io/tag-expressions/)

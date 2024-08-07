@@ -13,7 +13,7 @@ services:
     ports:
       - "9228:9229"
     environment:
-      TEST_ENVIRONMENT_ROOT_URL: http://host.docker.internal:3600
+      TEST_ENVIRONMENT_ROOT_URL: https://ffc-grants-frontend-test.azure.defra.cloud
 
   selenium:
     image: selenium/standalone-chrome

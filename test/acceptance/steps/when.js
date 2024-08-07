@@ -1,6 +1,6 @@
-const { When } = require('@wdio/cucumber-framework');
-const { browser } = require('@wdio/globals')
-const scoreResults = require('../pages/scoreResults');
+const { When } = require("@wdio/cucumber-framework");
+const { browser } = require("@wdio/globals");
+const scoreResults = require("../pages/scoreResults");
 
 When(/^(?:the user clicks|clicks) on "([^"]*)?"$/, async (text) => {
     await $("//*[contains(text(),'" + text + "')]").click();

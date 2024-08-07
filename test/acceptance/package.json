@@ -4,12 +4,14 @@
   "description": "> Adult Cattle Housing Acceptance Tests",
   "main": "index.js",
   "scripts": {
-    "test": "npx wdio run ./wdio.conf.js"
+    "test": "npx wdio run ./wdio.conf.js --cucumberOpts.tags=@RunInCI"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@hapi/wreck": "^18.1.0",
+    "@pnp/nodejs-commonjs": "^2.15.0",
     "@wdio/cli": "^8.39.1",
     "@wdio/cucumber-framework": "^8.39.0",
     "@wdio/local-runner": "^8.39.1",

@@ -1,4 +1,5 @@
-Feature: Applying for an Adult Cattle Housing Grant
+    @RunInCI
+    Feature: Applying for an Adult Cattle Housing Grant
     Illustrates scenarios applying for a Future Farming and Countryside Programme Adult Cattle Housing Grant.
 
     Scenario: User successfully applies for a grant
@@ -52,7 +53,7 @@ Feature: Applying for an Adult Cattle Housing Grant
         When the user enters the following
         | FIELD                              | VALUE                    | ID               |
         | Project name                       | Home Farm Cattle Project | projectName      |
-        | Business name                      | Home Farm                | businessName     |
+        | Business name                      | Home Farm Ltd            | businessName     |
         | Number of employees                | 5                        | numberEmployees  |
         | Annual business turnover (£)       | 2000000                  | businessTurnover |
         | Single Business Identifier (SBI)   | 123456789                | sbi              |
@@ -98,6 +99,24 @@ Feature: Applying for an Adult Cattle Housing Grant
         Then the user should be at URL "confirmation"
         And should see heading "Details submitted"
         And should see a reference number for their application
+
+        Then a spreadsheet should be generated with the following values
+        | FIELD NAME                                         | FIELD VALUE                    |
+        | FA or OA(EOI):	                                 | Outline Application            |
+        | Surname                                            | Deacon                         |
+        | Forename                                           | Andrew                         |
+        | Business name                                      | Home Farm Ltd                  |
+        | Address line 1                                     | Home Farm                      |
+        | Address line 2                                     | Market Weston                  |
+        | Address line 4 (town)                              | Oakham                         |
+        | Address line 5 (county)                            | Rutland                        |
+        | Postcode (use capitals)                            | LE1 1LE                        |
+        | Landline number                                    | 01234 123456                   |
+        | Mobile number                                      | 07777 123456                   |
+        | Email                                              | andrew.deacon@equalexperts.com |
+        | Business size                                      | Micro                          |
+        | Employees	                                         | 5                              |
+        | Business Form Classification (Status of Applicant) | Limited company                |
 
     Scenario: User is ineligible on legal status
         # start
