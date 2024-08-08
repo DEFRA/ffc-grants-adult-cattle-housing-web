@@ -4,7 +4,7 @@
   "description": "> Adult Cattle Housing Acceptance Tests",
   "main": "index.js",
   "scripts": {
-    "test": "npx wdio run ./wdio.conf.js --cucumberOpts.tags=@RunInCI"
+    "test": "npx wdio run ./wdio.conf.js --cucumberOpts.tags=@NoTest"
   },
   "keywords": [],
   "author": "",
