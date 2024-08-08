@@ -5,11 +5,7 @@ services:
     depends_on:
       - selenium
     volumes:
-      - ./features/:/home/node/features/
-      - ./pages/:/home/nodes/pages/
-      - ./steps/:/home/node/steps/
-      - ./html-reports/:/home/node/html-reports/
-      - ./package.json:/home/node/package.json
+      - ./reports/:/home/node/reports/
     ports:
       - "9228:9229"
     environment:

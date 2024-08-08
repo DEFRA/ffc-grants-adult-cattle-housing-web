@@ -1,3 +1,5 @@
+const { generate } = require('multiple-cucumber-html-reporter');
+
 exports.config = {
     hostname: 'selenium',
     port: 4444,
@@ -127,7 +129,15 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: [
+        'spec',
+        [
+            'cucumberjs-json', {
+                jsonFolder: './reports/json',
+                language: 'en',
+            }
+        ]
+    ],
 
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
@@ -314,8 +324,12 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    // onComplete: function(exitCode, config, capabilities, results) {
-    // },
+    onComplete: function(exitCode, config, capabilities, results) {
+        generate({
+            jsonDir: './reports/json',
+            reportPath: './reports/html',
+          });
+    },
     /**
     * Gets executed when a refresh happens.
     * @param {string} oldSessionId session ID of the old session
