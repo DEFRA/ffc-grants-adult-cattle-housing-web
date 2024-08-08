@@ -1,5 +1,5 @@
-html-reports
 node_modules
+reports
 test-output
 .dockerignore
 docker-compose*
