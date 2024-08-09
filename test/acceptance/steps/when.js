@@ -1,98 +1,58 @@
-import clearInputField from '../support/action/clearInputField'
-import clickElement from '../support/action/clickElement'
-import closeLastOpenedWindow from '../support/action/closeLastOpenedWindow'
-import deleteCookies from '../support/action/deleteCookies'
-import dragElement from '../support/action/dragElement'
-import focusLastOpenedWindow from '../support/action/focusLastOpenedWindow'
-import handleModal from '../support/action/handleModal'
-import moveTo from '../support/action/moveTo'
-import pause from '../support/action/pause'
-import pressButton from '../support/action/pressButton'
-import scroll from '../support/action/scroll'
-import selectOption from '../support/action/selectOption'
-import selectOptionByIndex from '../support/action/selectOptionByIndex'
-import setCookie from '../support/action/setCookie'
-import setInputField from '../support/action/setInputField'
-import setPromptText from '../support/action/setPromptText'
+const { When } = require("@wdio/cucumber-framework");
+const { browser } = require("@wdio/globals");
+const scoreResultsPage = require("../pages/scoreResultsPage");
 
-const { When } = require('cucumber')
+When(/^(?:the user clicks|clicks) on "([^"]*)?"$/, async (text) => {
+    await $("//*[contains(text(),'" + text + "')]").click();
+});
 
-When(
-  /^I (click|doubleclick) on the (link|button|element) "([^"]*)?"$/,
-  clickElement
-)
+When(/^(?:the user continues|continues)$/, async () => {
+    await $("//button[@id='Continue' or @id='btnContinue']").click();
+});
 
-When(
-  /^I (add|set) "([^"]*)?" to the inputfield "([^"]*)?"$/,
-  setInputField
-)
+When(/^(?:the user goes|goes) back$/, async () => {
+    await $("//*[@id='linkBack']").click();
+});
 
-When(
-  /^I clear the inputfield "([^"]*)?"$/,
-  clearInputField
-)
+When(/^(?:the user pauses|pauses)$/, async () => {
+    await browser.pause(5000);
+});
 
-When(
-  /^I drag element "([^"]*)?" to element "([^"]*)?"$/,
-  dragElement
-)
+When(/^(?:the user confirms|confirms) and sends$/, async () => {
+    await $("//button[@id='btnConfirmSend']").click();
+});
 
-When(
-  /^I pause for (\d+)ms$/,
-  pause
-)
+When(/^the user selects "([^"]*)?"$/, async (text) => {
+    const element = await $("//input[contains(@value,'" + text + "')]");
+    if (!await element.isSelected()) {
+        await element.click();
+    }});
 
-When(
-  /^I set a cookie "([^"]*)?" with the content "([^"]*)?"$/,
-  setCookie
-)
+When(/^the user selects the following$/, async (dataTable) => {
+    for (const row of dataTable.raw()) {
+        const element = await $("//input[@type='checkbox' and contains(@value,'" + row[0] + "')]");
+        if (!await element.isSelected()) {
+            await element.click();
+        }
+    };
+});
 
-When(
-  /^I delete the cookie "([^"]*)?"$/,
-  deleteCookies
-)
+When(/^(?:the user enters|enters) "([^"]*)?" in "([^"]*)?"$/, async (text, id) => {
+    await $("//input[@id='" + id + "']").setValue(text);
+});
 
-When(
-  /^I press "([^"]*)?"$/,
-  pressButton
-)
+When(/^the user enters the following$/, async (dataTable) => {
+    for (const row of dataTable.hashes()) {
+        const element = await $("//*[@id='" + row["ID"] + "']");
+        const tag = await element.getTagName();
+        if (tag == "select") {
+            await element.selectByVisibleText(row["VALUE"]);
+        } else {
+            await element.setValue(row["VALUE"]);
+        }
+    };
+});
 
-When(
-  /^I (accept|dismiss) the (alertbox|confirmbox|prompt)$/,
-  handleModal
-)
-
-When(
-  /^I enter "([^"]*)?" into the prompt$/,
-  setPromptText
-)
-
-When(
-  /^I scroll to element "([^"]*)?"$/,
-  scroll
-)
-
-When(
-  /^I close the last opened (window|tab)$/,
-  closeLastOpenedWindow
-)
-
-When(
-  /^I focus the last opened (window|tab)$/,
-  focusLastOpenedWindow
-)
-
-When(
-  /^I select the (\d+)(st|nd|rd|th) option for element "([^"]*)?"$/,
-  selectOptionByIndex
-)
-
-When(
-  /^I select the option with the (name|value|text) "([^"]*)?" for element "([^"]*)?"$/,
-  selectOption
-)
-
-When(
-  /^I move to element "([^"]*)?"(?: with an offset of (\d+),(\d+))*$/,
-  moveTo
-)
+When(/^(?:the user chooses|chooses) to change their "([^"]*)?" answers$/, async (section) => {
+    await new scoreResultsPage().changeAnswersFor(section);
+});

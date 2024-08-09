@@ -7,3 +7,4 @@ helm/**/*.lock
 .env
 .DS_Store
 html-reports
+reports
