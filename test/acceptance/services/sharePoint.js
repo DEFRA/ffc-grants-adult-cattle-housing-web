@@ -1,3 +1,4 @@
+const { worksheet, worksheetField } = require("../dto/worksheet");
 const { AdalFetchClient } = require("@pnp/nodejs-commonjs");
 const wreck = require("@hapi/wreck");
 
@@ -26,12 +27,12 @@ async function isSpreadsheetPresentFor(partialFileName) {
   return true;
 }
 
-async function getWorksheetDataFor(partialFileName) {
+async function getWorksheetFor(partialFileName) {
     const accessToken = await getAccessToken();
     const siteId = await getSiteId(accessToken);
     const driveId = await getDriveId(accessToken, siteId, config.documentLibrary);
     const fileId = await getFileIdFor(accessToken, driveId, config.uploadFolder, partialFileName);    
-    return getWorksheetData(accessToken, driveId, fileId, config.worksheet);
+    return getWorksheet(accessToken, driveId, fileId, config.worksheet);
 }
 
 async function getAccessToken() {
@@ -71,12 +72,17 @@ async function getFileIdFor(accessToken, driveId, uploadFolder, partialFileName)
   return file.id;
 }
 
-async function getWorksheetData(accessToken, driveId, fileId, worksheetName) {
+async function getWorksheet(accessToken, driveId, fileId, worksheetName) {
   const response = await wreck.get(
     `https://graph.microsoft.com/v1.0/drives/${driveId}/items/${fileId}/workbook/worksheets/${encodeURIComponent(worksheetName)}/usedRange?$select=values`,
     { headers: { Authorization: `Bearer ${accessToken}` }, json: true }
   );
-  return response.payload.values;
+  
+  const fields = response.payload.values
+    .filter(row => row[0] !== "" || row[1] !== "" || row[2] !== "")
+    .map(row => new worksheetField(row[1], row[2]));
+
+  return new worksheet(worksheetName, fields);
 }
 
-module.exports = { isSpreadsheetPresentFor, getWorksheetDataFor }
+module.exports = { isSpreadsheetPresentFor, getWorksheetFor }

@@ -1,5 +1,7 @@
 const { Then } = require("@wdio/cucumber-framework");
 const { browser } = require("@wdio/globals");
+const _ = require("lodash");
+const { worksheetField } = require("../dto/worksheet");
 const scoreResults = require("../pages/scoreResults");
 const guard = require("../services/guard");
 const poller = require("../services/poller");
@@ -63,18 +65,19 @@ Then(/^(?:the user should|should) see the following scoring answers$/, async (da
     await expect(actualAnswers).toEqual(expectedAnswers);
 });
 
-Then(/^a spreadsheet should be generated with the following values$/, async (expectedData) => {
+Then(/^a spreadsheet should be generated with the following values$/, async (expectedDataTable) => {
     guard.isNotNull(referenceNumber, "referenceNumber should have been set by a prior step");
 
     const isSpreadsheetPresent = await poller.pollForSuccess(async() => sharePoint.isSpreadsheetPresentFor(referenceNumber));
     await expect(isSpreadsheetPresent).toBe(true);
 
-    const actualData = (await sharePoint.getWorksheetDataFor(referenceNumber))
-        .filter(row => row[0] !== "" || row[1] !== "" || row[2] !== "")
-        .map(row => [row[1], row[2]]);
+    const expectedFields = expectedDataTable.hashes()
+        .map(row => new worksheetField(row["FIELD NAME"], row["FIELD VALUE"]));
 
-    for (const expectedRow of expectedData.hashes()) {
-        const matchingActualRow = actualData.find(actualRow => expectedRow["FIELD NAME"] === actualRow[0] && expectedRow["FIELD VALUE"] === actualRow[1]);
-        await expect(matchingActualRow).toEqual([expectedRow["FIELD NAME"], expectedRow["FIELD VALUE"]]);
+    const actualFields = (await sharePoint.getWorksheetFor(referenceNumber)).fields;
+
+    for (const expectedField of expectedFields) {
+        const matchingActualField = actualFields.find(actualField => _.isEqual(actualField, expectedField));
+        await expect(matchingActualField).toEqual(expectedField);
     }
 });
