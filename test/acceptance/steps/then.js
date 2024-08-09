@@ -2,7 +2,7 @@ const { Then } = require("@wdio/cucumber-framework");
 const { browser } = require("@wdio/globals");
 const _ = require("lodash");
 const { worksheetField } = require("../dto/worksheet");
-const scoreResults = require("../pages/scoreResults");
+const scoreResultsPage = require("../pages/scoreResultsPage");
 const guard = require("../services/guard");
 const poller = require("../services/poller");
 const sharePoint = require("../services/sharePoint");
@@ -60,7 +60,7 @@ Then(/^(?:the user should|should) see the following scoring answers$/, async (da
         }
     }
 
-    const actualAnswers = await scoreResults.getScores();
+    const actualAnswers = await new scoreResultsPage().getScores();
 
     await expect(actualAnswers).toEqual(expectedAnswers);
 });

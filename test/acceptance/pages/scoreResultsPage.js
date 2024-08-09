@@ -1,6 +1,6 @@
 const { $$ } = require('@wdio/globals')
 
-class scoreResults {
+class scoreResultsPage {
     async getScores () {
         const scoringRowElements = await this.#getScoringRowElements();
         return await Promise.all(await scoringRowElements.map(async e => {
@@ -47,4 +47,4 @@ class scoreResults {
     }
 }
 
-module.exports = new scoreResults();
+module.exports = scoreResultsPage;
