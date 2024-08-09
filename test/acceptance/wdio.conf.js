@@ -325,10 +325,10 @@ exports.config = {
      * @param {<Object>} results object containing test results
      */
     onComplete: function(exitCode, config, capabilities, results) {
-    //    generate({
-    //        jsonDir: './reports/json',
-    //        reportPath: './reports/html',
-    //      });
+        generate({
+            jsonDir: './reports/json',
+            reportPath: './reports/html',
+          });
     },
     /**
     * Gets executed when a refresh happens.
