@@ -12,4 +12,4 @@ class worksheetField {
     }
 }
 
-module.exports = { worksheet, worksheetField }
+module.exports = { worksheet, worksheetField };
