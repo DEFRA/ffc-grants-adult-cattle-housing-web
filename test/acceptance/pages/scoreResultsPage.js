@@ -1,15 +1,20 @@
 const { $$ } = require('@wdio/globals')
+const { scoreAnswer } = require("../dto/scoreAnswer");
 
 class scoreResultsPage {
-    async getScores () {
+    async getScore() {
+        return await $("//h1[text()='Score results']/following-sibling::div[1]/span").getText();
+    }
+
+    async getAnswers () {
         const scoringRowElements = await this.#getScoringRowElements();
         return await Promise.all(await scoringRowElements.map(async e => {
-            return {
-                section: await this.#getSectionName(e),
-                answers: await this.#getAnswers(e),
-                score: await this.#getScore(e),
-                fundingPriorities: await this.#getFundingPriorities(e)
-            };
+            return new scoreAnswer(
+                await this.#getSectionName(e),
+                await this.#getAnswers(e),
+                await this.#getScore(e),
+                await this.#getFundingPriorities(e)
+            );
         }));
     }
 

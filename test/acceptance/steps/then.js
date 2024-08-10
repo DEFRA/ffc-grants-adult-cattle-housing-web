@@ -1,6 +1,7 @@
 const { Then } = require("@wdio/cucumber-framework");
 const { browser } = require("@wdio/globals");
 const _ = require("lodash");
+const { scoreAnswer } = require("../dto/scoreAnswer");
 const { worksheetField } = require("../dto/worksheet");
 const scoreResultsPage = require("../pages/scoreResultsPage");
 const guard = require("../services/guard");
@@ -25,8 +26,9 @@ Then(/^(?:the user should|should) see heading label "([^"]*)?"$/, async (text) =
     await expect($("//h1/label[contains(text(),'" + text + "')]")).toBeDisplayed();
 });
 
-Then(/^(?:the user should|should) see "([^"]*)?" for their project's score$/, async (scoreStrength) => {
-    await expect($("//h1[text()='Score results']/following-sibling::div[1]/span")).toHaveText(scoreStrength);
+Then(/^(?:the user should|should) see "([^"]*)?" for their project's score$/, async (expectedScore) => {
+    const actualScore = await new scoreResultsPage().getScore();
+    await expect(actualScore).toEqual(expectedScore);
 });
 
 Then(/^(?:the user should|should) see a reference number for their application$/, async () => {
@@ -46,12 +48,12 @@ Then(/^(?:the user should|should) see the following scoring answers$/, async (da
         let fundingPriorities = row["FUNDING PRIORITIES"];
 
         if (section) {
-            expectedAnswer = {
-                section: section,
-                answers: [],
-                score: score,
-                fundingPriorities: fundingPriorities
-            };
+            expectedAnswer = new scoreAnswer(
+                section,
+                [],
+                score,
+                fundingPriorities
+            );
             expectedAnswers.push(expectedAnswer);
         }
 
@@ -60,7 +62,7 @@ Then(/^(?:the user should|should) see the following scoring answers$/, async (da
         }
     }
 
-    const actualAnswers = await new scoreResultsPage().getScores();
+    const actualAnswers = await new scoreResultsPage().getAnswers();
 
     await expect(actualAnswers).toEqual(expectedAnswers);
 });
