@@ -39,7 +39,7 @@
 
         # score
         Then the user should be at URL "score"
-        And should see "Weak" for their project's score
+        And should see "Weak" for their project score
         And should see the following scoring answers
         | SECTION | ANSWERS                                          | SCORE | FUNDING PRIORITIES                                          |
         | Impact  | Allow selling direct to consumer                 | Weak  | Improve processing and supply chains and grow your business |
@@ -160,7 +160,7 @@
         And continues
 
         # score
-        Then the user should see "Weak" for their project's score
+        Then the user should see "Weak" for their project score
         And should see the following scoring answers
         | SECTION | ANSWERS                                          | SCORE | FUNDING PRIORITIES                                          |
         | Impact  | Creating added-value products for the first time | Weak  | Improve processing and supply chains and grow your business |
@@ -177,7 +177,7 @@
 
         # score
         Then the user should be at URL "score"
-        And should see "Strong" for their project's score
+        And should see "Strong" for their project score
         And should see the following scoring answers
         | SECTION | ANSWERS                                          | SCORE  | FUNDING PRIORITIES                                          |
         | Impact  | Increasing range of added-value products         | Strong | Improve processing and supply chains and grow your business |

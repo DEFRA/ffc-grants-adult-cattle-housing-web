@@ -26,7 +26,7 @@ Then(/^(?:the user should|should) see heading label "([^"]*)?"$/, async (text) =
     await expect($("//h1/label[contains(text(),'" + text + "')]")).toBeDisplayed();
 });
 
-Then(/^(?:the user should|should) see "([^"]*)?" for their project's score$/, async (expectedScore) => {
+Then(/^(?:the user should|should) see "([^"]*)?" for their project score$/, async (expectedScore) => {
     const actualScore = await new scoreResultsPage().getScore();
     await expect(actualScore).toEqual(expectedScore);
 });
