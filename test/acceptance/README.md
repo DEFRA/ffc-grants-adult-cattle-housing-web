@@ -25,11 +25,23 @@ SHAREPOINT_UPLOAD_FOLDER
 SHAREPOINT_WORKSHEET
 ```
 
-2. If running against `localhost` ensure the application container is running with `docker-compose up --build` from the root folder of this repository.
+2. For ARM architectures, change the image used for Chrome in `docker-compose.yaml`:
 
-3. From the `/test/acceptance` directory run `docker-compose run --build --rm wdio-cucumber`. This will run all acceptance tests tagged `@RunInCI`.
+```
+  selenium:
+    image: selenium/standalone-chrome
 
-4. HTML reports will be output to `./reports`.
+CHANGES TO..
+
+  selenium:
+    image: seleniarm/standalone-chromium
+```   
+
+3. If running against `localhost` ensure the application container is running with `docker-compose up --build` from the root folder of this repository.
+
+4. From the `/test/acceptance` directory run `docker-compose run --build --rm wdio-cucumber`. This will run all acceptance tests tagged `@RunInCI`.
+
+5. HTML reports will be output to `./reports`.
 
 ## Running tests outside a container
 To run the tests outside a container:

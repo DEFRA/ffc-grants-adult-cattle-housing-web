@@ -11,6 +11,8 @@ services:
 
   selenium:
     image: selenium/standalone-chrome
+    # change to following image for ARM architectures
+    #image: seleniarm/standalone-chromium
     container_name: chrome-browser
     volumes:
       - /dev/shm:/dev/shm
