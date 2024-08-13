@@ -20,17 +20,29 @@
   },
   "author": "Defra",
   "contributors": [
-    {"name":"Andrew Folga","url":"https://github.com/Andrew-Folga"},
-    {"name":"David Barker","url":"https://github.com/DavidBarker-EE"},
-    {"name":"Andrew Deacon","url":"https://github.com/ScenarioFactory"},
-    {"name":"Alan Platt","url":"https://github.com/alanplatt"}
+    {
+      "name": "Andrew Folga",
+      "url": "https://github.com/Andrew-Folga"
+    },
+    {
+      "name": "David Barker",
+      "url": "https://github.com/DavidBarker-EE"
+    },
+    {
+      "name": "Andrew Deacon",
+      "url": "https://github.com/ScenarioFactory"
+    },
+    {
+      "name": "Alan Platt",
+      "url": "https://github.com/alanplatt"
+    }
   ],
   "license": "OGL-UK-3.0",
   "bugs": {
     "url": "https://github.com/DEFRA/ffc-grants-adult-cattle-housing-web/issues"
   },
   "dependencies": {
-    "@defra/hapi-gapi": "^2.1.2",
+    "@defra/hapi-gapi": "^2.1.7",
     "@hapi/catbox-redis": "^6.0.2",
     "@hapi/cookie": "^11.0.2",
     "@hapi/crumb": "^8.0.1",
