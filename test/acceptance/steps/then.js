@@ -1,199 +1,85 @@
-import checkClass from '../support/check/checkClass'
-import checkContainsAnyText from '../support/check/checkContainsAnyText'
-import checkIsEmpty from '../support/check/checkIsEmpty'
-import checkContainsText from '../support/check/checkContainsText'
-import checkCookieContent from '../support/check/checkCookieContent'
-import checkCookieExists from '../support/check/checkCookieExists'
-import checkDimension from '../support/check/checkDimension'
-import checkEqualsText from '../support/check/checkEqualsText'
-import checkFocus from '../support/check/checkFocus'
-import checkInURLPath from '../support/check/checkInURLPath'
-import checkIsOpenedInNewWindow from
-  '../support/check/checkIsOpenedInNewWindow'
-import checkModal from '../support/check/checkModal'
-import checkModalText from '../support/check/checkModalText'
-import checkNewWindow from '../support/check/checkNewWindow'
-import checkOffset from '../support/check/checkOffset'
-import checkProperty from '../support/check/checkProperty'
-import checkFontProperty from '../support/check/checkFontProperty'
-import checkSelected from '../support/check/checkSelected'
-import checkTitle from '../support/check/checkTitle'
-import checkTitleContains from '../support/check/checkTitleContains'
-import checkURL from '../support/check/checkURL'
-import checkURLPath from '../support/check/checkURLPath'
-import checkWithinViewport from '../support/check/checkWithinViewport'
-import compareText from '../support/check/compareText'
-import isEnabled from '../support/check/isEnabled'
-import isExisting from '../support/check/isExisting'
-import isVisible from '../support/check/isDisplayed'
-import waitFor from '../support/action/waitFor'
-import waitForVisible from '../support/action/waitForDisplayed'
-import checkIfElementExists from '../support/lib/checkIfElementExists'
-import checkURLContains from '../support/check/checkURLContains'
+const { Then } = require("@wdio/cucumber-framework");
+const { browser } = require("@wdio/globals");
+const _ = require("lodash");
+const { scoreAnswer } = require("../dto/scoreAnswer");
+const { worksheetField } = require("../dto/worksheet");
+const scoreResultsPage = require("../pages/scoreResultsPage");
+const guard = require("../services/guard");
+const poller = require("../services/poller");
+const sharePoint = require("../services/sharePoint");
 
-const { Then } = require('cucumber')
+let referenceNumber = null;
 
-Then(
-  /^I expect that the title is( not)* "([^"]*)?"$/,
-  checkTitle
-)
+Then(/^(?:the user should|should) be at URL "([^"]*)?"$/, async (urlPath) => {
+    const fullUrl = await browser.getUrl();
+    expect(fullUrl.endsWith(urlPath));
+});
 
-Then(
-  /^I expect that the title( not)* contains "([^"]*)?"$/,
-  checkTitleContains
-)
-
-Then(
-  /^I expect that element "([^"]*)?" does( not)* appear exactly "([^"]*)?" times$/,
-  checkIfElementExists
-)
-
-Then(
-  /^I expect that element "([^"]*)?" is( not)* displayed$/,
-  isVisible
-)
-
-Then(
-  /^I expect that element "([^"]*)?" becomes( not)* displayed$/,
-  waitForVisible
-)
-
-Then(
-  /^I expect that element "([^"]*)?" is( not)* within the viewport$/,
-  checkWithinViewport
-)
-
-Then(
-  /^I expect that element "([^"]*)?" does( not)* exist$/,
-  isExisting
-)
-
-Then(
-  /^I expect that element "([^"]*)?"( not)* contains the same text as element "([^"]*)?"$/,
-  compareText
-)
-
-Then(
-  /^I expect that (button|element) "([^"]*)?"( not)* matches the text "([^"]*)?"$/,
-  checkEqualsText
-)
-
-Then(
-  /^I expect that (button|element|container) "([^"]*)?"( not)* contains the text "([^"]*)?"$/,
-  checkContainsText
-)
-
-Then(
-  /^I expect that (button|element) "([^"]*)?"( not)* contains any text$/,
-  checkContainsAnyText
-)
-
-Then(
-  /^I expect that (button|element) "([^"]*)?" is( not)* empty$/,
-  checkIsEmpty
-)
-
-Then(
-  /^I expect that the url is( not)* "([^"]*)?"$/,
-  checkURL
-)
-
-Then(
-  /^I expect that the url( not)* contains "([^"]*)?"$/,
-  checkURLContains
-)
-
-Then(
-  /^I expect that the path is( not)* "([^"]*)?"$/,
-  checkURLPath
-)
-
-Then(
-  /^I expect the url to( not)* contain "([^"]*)?"$/,
-  checkInURLPath
-)
-
-Then(
-  /^I expect that the( css)* attribute "([^"]*)?" from element "([^"]*)?" is( not)* "([^"]*)?"$/,
-  checkProperty
-)
-
-Then(
-  /^I expect that the font( css)* attribute "([^"]*)?" from element "([^"]*)?" is( not)* "([^"]*)?"$/,
-  checkFontProperty
-)
-
-Then(
-  /^I expect that checkbox "([^"]*)?" is( not)* checked$/,
-  checkSelected
-)
-
-Then(
-  /^I expect that element "([^"]*)?" is( not)* selected$/,
-  checkSelected
-)
-
-Then(
-  /^I expect that element "([^"]*)?" is( not)* enabled$/,
-  isEnabled
-)
-
-Then(
-  /^I expect that cookie "([^"]*)?"( not)* contains "([^"]*)?"$/,
-  checkCookieContent
-)
-
-Then(
-  /^I expect that cookie "([^"]*)?"( not)* exists$/,
-  checkCookieExists
-)
-
-Then(
-  /^I expect that element "([^"]*)?" is( not)* ([\d]+)px (broad|tall)$/,
-  checkDimension
-)
-
-Then(
-  /^I expect that element "([^"]*)?" is( not)* positioned at ([\d+.?\d*]+)px on the (x|y) axis$/,
-  checkOffset
-)
-
-Then(
-  /^I expect that element "([^"]*)?" (has|does not have) the class "([^"]*)?"$/,
-  checkClass
-)
-
-Then(
-  /^I expect a new (window|tab) has( not)* been opened$/,
-  checkNewWindow
-)
-
-Then(
-  /^I expect the url "([^"]*)?" is opened in a new (tab|window)$/,
-  checkIsOpenedInNewWindow
-)
-
-Then(
-  /^I expect that element "([^"]*)?" is( not)* focused$/,
-  checkFocus
-)
-
-Then(
-  /^I wait on element "([^"]*)?"(?: for (\d+)ms)*(?: to( not)* (be checked|be enabled|be selected|be displayed|contain a text|contain a value|exist))*$/,
-  {
-    wrapperOptions: {
-      retry: 3
+Then(/^(?:the user should|should) see heading "([^"]*)?"$/, async (text) => {
+    if (text.indexOf("'") > -1) {
+        text = text.substring(0, text.indexOf("'"))
     }
-  },
-  waitFor
-)
+    await expect($("//h1[contains(text(),\"" + text + "\")]")).toBeDisplayed();
+});
 
-Then(
-  /^I expect that a (alertbox|confirmbox|prompt) is( not)* opened$/,
-  checkModal
-)
+Then(/^(?:the user should|should) see heading label "([^"]*)?"$/, async (text) => {
+    await expect($("//h1/label[contains(text(),'" + text + "')]")).toBeDisplayed();
+});
 
-Then(
-  /^I expect that a (alertbox|confirmbox|prompt)( not)* contains the text "([^"]*)?"$/,
-  checkModalText
-)
+Then(/^(?:the user should|should) see "([^"]*)?" for their project score$/, async (expectedScore) => {
+    const actualScore = await new scoreResultsPage().getScore();
+    await expect(actualScore).toEqual(expectedScore);
+});
+
+Then(/^(?:the user should|should) see a reference number for their application$/, async () => {
+    const selector = $("//h1/following-sibling::div[1]/strong");
+    await expect(selector).toHaveText(expect.stringContaining("-"));
+    referenceNumber = await selector.getText();
+});
+
+Then(/^(?:the user should|should) see the following scoring answers$/, async (dataTable) => {
+    const expectedAnswers = [];
+    let expectedAnswer = {};
+    
+    for (const row of dataTable.hashes()) {
+        let section = row["SECTION"];
+        let answer = row["ANSWERS"];
+        let score = row["SCORE"];
+        let fundingPriorities = row["FUNDING PRIORITIES"];
+
+        if (section) {
+            expectedAnswer = new scoreAnswer(
+                section,
+                [],
+                score,
+                fundingPriorities
+            );
+            expectedAnswers.push(expectedAnswer);
+        }
+
+        if (answer) {
+            expectedAnswer.answers.push(answer);
+        }
+    }
+
+    const actualAnswers = await new scoreResultsPage().getAnswers();
+
+    await expect(actualAnswers).toEqual(expectedAnswers);
+});
+
+Then(/^a spreadsheet should be generated with the following values$/, async (expectedDataTable) => {
+    guard.isNotNull(referenceNumber, "referenceNumber should have been set by a prior step");
+
+    const isSpreadsheetPresent = await poller.pollForSuccess(async() => sharePoint.isSpreadsheetPresentFor(referenceNumber));
+    await expect(isSpreadsheetPresent).toBe(true);
+
+    const expectedFields = expectedDataTable.hashes()
+        .map(row => new worksheetField(row["FIELD NAME"], row["FIELD VALUE"]));
+
+    const actualFields = (await sharePoint.getWorksheetFor(referenceNumber)).fields;
+
+    for (const expectedField of expectedFields) {
+        const matchingActualField = actualFields.find(actualField => _.isEqual(actualField, expectedField));
+        await expect(matchingActualField).toEqual(expectedField);
+    }
+});

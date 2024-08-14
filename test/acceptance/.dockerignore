@@ -1,0 +1,7 @@
+node_modules
+reports
+test-output
+.dockerignore
+docker-compose*
+Dockerfile
+README.md

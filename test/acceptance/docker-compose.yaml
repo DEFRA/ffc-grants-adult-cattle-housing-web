@@ -1,20 +1,18 @@
-version: "3.7"
 services:
   wdio-cucumber:
     build: .
-    image: ffc-grants-adult-cattle-housing-acceptance
-    container_name: webdriver-cuke
+    image: wdio-cucumber
     depends_on:
       - selenium
-      - hub
-    environment:
-      TEST_ENVIRONMENT_ROOT_URL: ${TEST_ENVIRONMENT_ROOT_URL}
-      CHROME_ARGS: "--headless --ignore-certificate-errors"
+    volumes:
+      - ./reports/:/home/node/reports/
+    ports:
+      - "9228:9229"
 
   selenium:
-    image: selenium/standalone-chrome-debug
+    image: selenium/standalone-chrome
+    # change to following image for ARM architectures
+    #image: seleniarm/standalone-chromium
     container_name: chrome-browser
-
-  hub:
-    image: selenium/hub
-    container_name: selenium-hub
+    volumes:
+      - /dev/shm:/dev/shm
